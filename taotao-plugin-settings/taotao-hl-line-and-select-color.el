@@ -8,7 +8,8 @@
  ;; If there is more than one, they won't work right.
  ;; '(hl-line ((t (:inherit t :background "gray13")))))
  ;; 这个是原有的风格选中的颜色，现在设置为高亮行的颜色
- '(hl-line ((t (:inherit t :background "#3E3D31")))))
+ ;; '(hl-line ((t (:inherit t :background "#3E3D31")))))
+ '(hl-line ((t (:inherit t :background "#0432ff")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置选中的颜色

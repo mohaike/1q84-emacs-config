@@ -17,6 +17,8 @@
 (add-to-list 'load-path "~/.emacs.d/taotao-plugin-settings")
 (require 'taotao-monokai)
 
+(require 'taotao-hl-line-and-select-color)
+
 (require 'taotao-autopair)
 
 (require 'taotao-browse-kill-ring)
@@ -32,8 +34,6 @@
 (require 'taotao-nxml-fold)
 
 (require 'taotao-reveal-in-finder)      ;Mac在平台文件在Finder中打开的设定
-
-(require 'taotao-hl-line-and-select-color)
 
 (require 'taotao-dash-at-point)
 
