@@ -952,8 +952,12 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
       (process-send-string proc text)
       (process-send-eof proc))))
 
-(setq interprogram-cut-function 'paste-to-osx)
-(setq interprogram-paste-function 'copy-from-osx)
+;; 用 progn 括起来的是一次执行多条语句
+;; 这么设定是为了在图形界面下拷贝xcode里面的东西到emacs里面不会有【^M】(C+q, C+m可输出这个)，不过终端的话就没办法了，只能
+;; 这么弄不然没法拷贝黏贴
+(if (not (display-graphic-p))
+    (progn (setq interprogram-cut-function 'paste-to-osx)
+           (setq interprogram-paste-function 'copy-from-osx)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置安装包来源
