@@ -94,5 +94,27 @@
 
   ("g" keyboard-quit)
 
+  ("ms" magit-status)
+
+  ("dtw" delete-trailing-whitespace)
+
+  ("wm" whitespace-mode)
+
+  ("ts" taotao-screenshot)
+
   ("q" nil "quit")))
+
+(global-set-key
+ (kbd "<f1>")
+ (defhydra hydra-1q84 (:pre (set-cursor-color "#40e0d0")
+                    :post (progn
+                            (set-cursor-color "#ffffff")
+                            (message
+                             "Thank you, come again.")))
+  "1q84"
+  ("1" lua-mode)
+  ("u" revert-buffer)
+
+  ("q" nil "quit")))
+
 (provide 'taotao-hydra)
