@@ -68,7 +68,8 @@
   ("u" revert-buffer)
 
   ("1" taotao-window)
-  ("2" taotao-gs-window)
+  ("2" taotao-stick-man-window)
+  ("3" taotao-gs-window)
   ("`" mark-sexp)
   ("v" set-mark-command)
   ("e" xah-open-in-external-app)
@@ -114,6 +115,12 @@
   "1q84"
   ("1" lua-mode)
   ("u" revert-buffer)
+  ("h" global-hl-line-mode)
+
+  ("j" js-mode)
+
+  ("s" pinyin-search)
+  ("r" pinyin-search-backward)
 
   ("q" nil "quit")))
 

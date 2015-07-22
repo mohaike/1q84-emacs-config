@@ -880,14 +880,30 @@ This is particularly useful under Mac OSX, where GUI apps are not started from a
 
 (defun taotao-gs-window ()
   (interactive)
-  (dired "~/Documents/GS/mysingingmonsters_client")
+  (dired "~/Documents/Project/GS/mysingingmonsters_client")
   (shell)
-  (dired "~/Documents/GS/mysingingmonsters_client")
+  (dired "~/Documents/Project/GS/mysingingmonsters_client/")
   (kill-buffer)
   (switch-to-buffer "*scratch*")
 
   (taotao-window)
-  (dired "~/Documents/GS/mysingingmonsters_client/MSMYodo2/")
+  (dired "~/Documents/Project/GS/mysingingmonsters_client/MSMYodo2")
+  )
+
+(global-set-key (kbd "M-s-w") 'taotao-window)
+(global-set-key (kbd "M-s-g") 'taotao-gs-window)
+
+
+(defun taotao-stick-man-window ()
+  (interactive)
+  (dired "~/Documents/Project/SM")
+  (shell)
+  (dired "~/Documents/Project/SM")
+  (kill-buffer)
+  (switch-to-buffer "*scratch*")
+
+  (taotao-window)
+  (dired "~/Documents/Project/SM/Classes")
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -965,7 +981,7 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
 (when (>= emacs-major-version 24)
   (require 'package)
   (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                           ("marmalade" . "https://marmalade-repo.org/packages/")
+                           ;; ("marmalade" . "https://marmalade-repo.org/packages/")
                            ("melpa" . "http://melpa.org/packages/")))
   (package-initialize))
 
@@ -983,9 +999,6 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-file "~/.emacs.d/taotao-origin-init/taotao-macros/hct-macro.macs") ;加载hct-macro宏文件
 
-(global-set-key (kbd "M-s-w") 'hct-window)
-(global-set-key (kbd "M-s-q") 'hct-window-undo)
-(global-set-key (kbd "M-s-g") 'hct-gs-window)
 (global-set-key (kbd "M-s-x") 'hct-cp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
