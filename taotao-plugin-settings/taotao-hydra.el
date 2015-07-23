@@ -119,9 +119,6 @@
 
   ("j" js-mode)
 
-  ("s" pinyin-search)
-  ("r" pinyin-search-backward)
-
   ("q" nil "quit")))
 
 (provide 'taotao-hydra)

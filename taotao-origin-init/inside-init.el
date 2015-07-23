@@ -1020,4 +1020,24 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
 (setq nxml-child-indent 4
       nxml-outline-child-indent 4)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 相对kill-sexp的delete设定，这个sexp的设定也就是一个symbol的之间的操作
+;; 比如说forward-sexp, backward-sexp之类的
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun delete-sexp (&optional arg)
+  "Delete the sexp (balanced expression) following point.
+With ARG, delete that many sexps after point.
+Negative arg -N means delete N sexps before point.
+This command assumes point is not in a string or comment."
+  (interactive "p")
+  (let ((opoint (point)))
+    (forward-sexp (or arg 1))
+    (delete-region opoint (point))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 依赖上面的自定义delete-sexp函数
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/taotao-origin-init/taotao-xcode-projcet-code")
+(require 'taotao-xcode-projcet-code)
+
 (provide 'inside-init)
