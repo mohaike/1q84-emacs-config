@@ -93,7 +93,7 @@
 
   ("z" taotao-mark-line)
 
-  ("g" keyboard-quit)
+  ("tg" keyboard-quit)
 
   ("ms" magit-status)
 
@@ -118,6 +118,9 @@
   ("h" global-hl-line-mode)
 
   ("j" js-mode)
+
+  ("ts" taotao-stick-man-profile)
+  ("tm" taotao-msm-profile)
 
   ("q" nil "quit")))
 
