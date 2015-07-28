@@ -17,6 +17,10 @@
 (add-to-list 'load-path "~/.emacs.d/taotao-plugin-settings")
 (require 'taotao-monokai)
 
+(require 'taotao-dired-hl-hook)
+
+(require 'taotao-emacs-mac-port)        ;Mac平台的emacs-mac-port的额外的设定
+
 (require 'taotao-hl-line-and-select-color)
 
 (require 'taotao-autopair)
