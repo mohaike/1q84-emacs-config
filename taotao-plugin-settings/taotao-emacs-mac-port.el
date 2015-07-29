@@ -9,4 +9,5 @@
   )
 
 (global-set-key (kbd "s-v") 'yank)
+(global-set-key (kbd "s-k") 'kill-this-buffer)
 (provide 'taotao-emacs-mac-port)
