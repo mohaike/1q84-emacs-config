@@ -4,7 +4,7 @@
 ;; 水木社区里面看到的
 ;; 还写了复制和剪切的函数，如果当前有选中区域就和默认的复制/剪切一样，如果没有
 ;; 选中区域，就复制/剪切当前行，这三个函数都可以接收C-u number做为数字参数，
-;; 传入数字几就操作几行。 
+;; 传入数字几就操作几行。
 ;; 不过感觉很是诡异，所以我就不用了，注释掉了
 ;; 所以我改了一个自己的
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -13,9 +13,9 @@
    (interactive "P")
    (if mark-active
        (kill-ring-save (region-beginning) (region-end))
-     (let ((beg (progn (back-to-indentation) (point)))  
+     (let ((beg (progn (back-to-indentation) (point)))
            (end (line-end-position arg)))
-       (copy-region-as-kill beg end))))        
+       (copy-region-as-kill beg end))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun taotao-copy (&optional arg)
    "switch action by whether mark is active"
@@ -70,15 +70,15 @@
                (if (< (mark) (point)) -1 1)))
    (if (and arg (> arg 1))
        (progn
-         (goto-char (line-end-position arg))))) 
+         (goto-char (line-end-position arg)))))
 
 (global-set-key (kbd "M-w") 'taotao-copy)
-(global-set-key (kbd "C-w") 'yp-kill) 
-(global-set-key (kbd "C-'") 'yp-mark-line) 
+(global-set-key (kbd "C-w") 'yp-kill)
+(global-set-key (kbd "C-'") 'yp-mark-line)
 (global-set-key (kbd "M-'") 'yp-copy)
-(global-set-key (kbd "C-z") 'taotao-mark-line) 
-(global-set-key (kbd "s-z") 'taotao-mark-line) 
-(global-set-key (kbd "s-g") 'keyboard-quit) 
+(global-set-key (kbd "C-z") 'taotao-mark-line)
+(global-set-key (kbd "s-z") 'taotao-mark-line)
+(global-set-key (kbd "s-g") 'keyboard-quit)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -121,7 +121,7 @@
 ;;   (move-text-internal (- arg)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (global-set-key (kbd "s-_") 'move-text-up)
-;; (global-set-key (kbd "s-+") 'move-text-down) 
+;; (global-set-key (kbd "s-+") 'move-text-down)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun move-region (start end n)
   "Move the current region up or down by N lines."
@@ -177,14 +177,14 @@
   (interactive)
   (shift-region -4))
 
-(global-set-key (kbd "s-{") 'shift-left) 
-(global-set-key (kbd "s-}") 'shift-right) 
-(global-set-key (kbd "s-[") 'shift-left-tab) 
-(global-set-key (kbd "s-]") 'shift-right-tab) 
+(global-set-key (kbd "s-{") 'shift-left)
+(global-set-key (kbd "s-}") 'shift-right)
+(global-set-key (kbd "s-[") 'shift-left-tab)
+(global-set-key (kbd "s-]") 'shift-right-tab)
 
-(global-set-key (kbd "C-_") 'shift-left) 
-(global-set-key (kbd "C-+") 'shift-right) 
-(global-set-key (kbd "C--") 'shift-left-tab) 
+(global-set-key (kbd "C-_") 'shift-left)
+(global-set-key (kbd "C-+") 'shift-right)
+(global-set-key (kbd "C--") 'shift-left-tab)
 (global-set-key (kbd "C-=") 'shift-right-tab)
 
 
@@ -266,8 +266,8 @@
 ;; 位置跳转
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun ska-point-to-register()
-  "Store cursorposition _fast_ in a register. 
-Use ska-jump-to-register to jump back to the stored 
+  "Store cursorposition _fast_ in a register.
+Use ska-jump-to-register to jump back to the stored
 position."
   (interactive)
   (setq zmacs-region-stays t)
@@ -323,8 +323,8 @@ occurence of CHAR."
 ;; ibuffer
 ;; 窗口跳转
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load "desktop") 
-(desktop-load-default) 
+(load "desktop")
+(desktop-load-default)
 (desktop-read)
 
 (require 'ido)
@@ -336,9 +336,9 @@ occurence of CHAR."
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(when (fboundp 'winner-mode) 
-  (winner-mode) 
-  (windmove-default-keybindings)) 
+(when (fboundp 'winner-mode)
+  (winner-mode)
+  (windmove-default-keybindings))
 (windmove-default-keybindings 'meta)
 
 
@@ -431,7 +431,7 @@ occurence of CHAR."
 ;; 据说会更加好用的注释
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun qiang-comment-dwim-line (&optional arg)
-  "Replacement for the comment-dwim command. 
+  "Replacement for the comment-dwim command.
    If no region is selected and current line is not
    blank and we are not at the end of the line, then
    comment current line. Replaces default behaviour
@@ -441,7 +441,7 @@ occurence of CHAR."
   (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
     (comment-dwim arg)))
-(global-set-key (kbd "M-;") 'qiang-comment-dwim-line) 
+(global-set-key (kbd "M-;") 'qiang-comment-dwim-line)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -452,13 +452,13 @@ occurence of CHAR."
             'comint-strip-ctrl-m)
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on t)
-(set-language-environment 'utf-8) 
-(setq locale-coding-system 'utf-8) 
-(set-default-coding-systems 'utf-8) 
+(set-language-environment 'utf-8)
+(setq locale-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8) 
-(set-selection-coding-system 'utf-8) 
-(prefer-coding-system 'utf-8) 
+(set-terminal-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -468,7 +468,7 @@ occurence of CHAR."
 ;; -----------------------------------------------------------------------------
 ;; setting font for mac system
 ;; -----------------------------------------------------------------------------
-;; Setting English Font 
+;; Setting English Font
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-face-attribute 'default nil :font "Monaco 13")
 
@@ -550,7 +550,7 @@ occurence of CHAR."
   "Increase emacs's font-size acording emacs-font-size-pair-list."
   (interactive) (emacs-step-font-size -1))
 
-;; 最後，綁定到自己習慣的按鍵，就大功告成啦 :) 
+;; 最後，綁定到自己習慣的按鍵，就大功告成啦 :)
 
 (global-set-key (kbd "C-*") 'increase-emacs-font-size)
 (global-set-key (kbd "C-&") 'decrease-emacs-font-size)
@@ -573,14 +573,14 @@ occurence of CHAR."
       (beginning-of-thing 'word))
   (isearch-yank-word-or-char)
   ;; Revert to 'isearch-yank-word-or-char for subsequent calls
-  (substitute-key-definition 'my-isearch-yank-word-or-char-from-beginning 
+  (substitute-key-definition 'my-isearch-yank-word-or-char-from-beginning
 			     'isearch-yank-word-or-char
 			     isearch-mode-map))
 
 (add-hook 'isearch-mode-hook
  (lambda ()
    "Activate my customized Isearch word yank command."
-   (substitute-key-definition 'isearch-yank-word-or-char 
+   (substitute-key-definition 'isearch-yank-word-or-char
 			      'my-isearch-yank-word-or-char-from-beginning
 			      isearch-mode-map)))
 
@@ -602,10 +602,10 @@ occurence of CHAR."
        (end (get-point end-of-thing arg)))
       (copy-region-as-kill beg end)))
 )
-     
+
 (defun paste-to-mark(&optional arg)
   "Paste things to mark, or to the prompt in shell-mode"
-  (let ((pasteMe 
+  (let ((pasteMe
     (lambda()
       (if (string= "shell-mode" major-mode)
         (progn (comint-next-prompt 25535) (yank))
@@ -673,7 +673,7 @@ occurence of CHAR."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 额
 ;; (defun newline-and-indent-relative ()
-;;   "Insert a newline, then indent relative to the previous line." 
+;;   "Insert a newline, then indent relative to the previous line."
 ;;   (interactive "*") (newline) (indent-relative))
 ;; (global-set-key (kbd "<backtab>") 'newline-and-indent-relative)
 ;; (global-set-key (kbd "<backtab>") 'indent-relative)
@@ -692,7 +692,7 @@ Version 2015-04-09"
   (interactive)
   (let ( ξp1 ξp2 ξsstr )
     (if (use-region-p)
-        (progn 
+        (progn
           (setq ξp1 (region-beginning))
           (setq ξp2 (region-end)))
       (save-excursion
