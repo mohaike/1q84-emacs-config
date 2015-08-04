@@ -1040,4 +1040,10 @@ This command assumes point is not in a string or comment."
 (add-to-list 'load-path "~/.emacs.d/taotao-origin-init/taotao-xcode-projcet-code")
 (require 'taotao-xcode-projcet-code)
 
+(defun taotao-modeline ()
+  (interactive)
+
+  (face-remap-add-relative
+   'mode-line '((:foreground "ivory" :background "DarkOrange2") mode-line)))
+
 (provide 'inside-init)
