@@ -19,4 +19,5 @@
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
               (ggtags-mode 1))))
 
+;; (setq gtags-auto-update t)
 (provide 'taotao-gtags-ggtags)
