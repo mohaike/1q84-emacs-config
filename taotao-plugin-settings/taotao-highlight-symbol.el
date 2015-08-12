@@ -2,6 +2,9 @@
 ;; 这个要在highlight-symbol.el里面改
 ;; (defalias 'highlight-symbol-at-point 'highlight-symbol) ==> (defalias 'taotao-highlight-symbol-at-point 'highlight-symbol)
 ;; 之后再编译下，就可以使用了
+;;
+;; 还需要在highlight-symbol-autoloads.el里面修改，因为上面的似乎不大管用
+;; (defalias 'highlight-symbol-at-point 'highlight-symbol) ==> (defalias 'taotao-highlight-symbol-at-point 'highlight-symbol)
 (global-set-key (kbd "M-|") 'taotao-highlight-symbol-at-point)
 (global-set-key (kbd "M-]") 'highlight-symbol-next)
 (global-set-key (kbd "M-[") 'highlight-symbol-prev)
