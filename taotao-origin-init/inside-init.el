@@ -621,6 +621,7 @@ occurence of CHAR."
  "Copy words at point into kill-ring"
   (interactive "P")
   (copy-thing 'forward-word 'backward-word arg)
+  ;; (message "File path copied: 「%s」" fPath)
 )
 
 (defun copy-word-backward (&optional arg)
