@@ -32,4 +32,46 @@ See the command `isearch-forward-symbol' for more information."
       (message "No symbol at point")
       (message "Copy the symbol!")))))
 
+(defun taotao-mark-language (arg)
+  (interactive "^p")
+  ;; 证书文件路径
+  (move-beginning-of-line arg)
+  (kill-line)
+  (yank)
+  (save-buffer)
+  (next-multiframe-window)
+  (yank)
+  (open-line 1)
+  (next-line)
+  (save-buffer)
+  (previous-multiframe-window)
+
+  (move-beginning-of-line arg)
+  (insert-before-markers "【")  ;; 签名
+  (move-end-of-line arg)
+  (insert-before-markers "】")  ;; 签名
+  (next-line)
+  (save-buffer)
+  (move-beginning-of-line arg))
+
+(defun taotao-cp-language (arg)
+  (interactive "^p")
+  (move-beginning-of-line arg)
+  (kill-line)
+  (yank)
+  (save-buffer)
+  (move-beginning-of-line arg))
+
+(defun taotao-xxx-language-key (arg)
+  (interactive "^p")
+  (move-end-of-line arg)
+  (insert-before-markers "	==>")
+  (yank)
+  (move-end-of-line arg)
+  (next-line)
+  (move-beginning-of-line arg)
+  (save-buffer)
+  
+)
+
 (provide 'taotao-mini-init)

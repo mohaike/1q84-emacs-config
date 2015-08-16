@@ -125,13 +125,17 @@
 
   ("tl" hl-line-mode)
 
-  ("ms" magit-status)
+  ;; ("ms" magit-status)
 
   ("dtw" delete-trailing-whitespace)
 
   ("wm" whitespace-mode)
 
   ("ts" taotao-screenshot)
+
+  ("m" taotao-mark-language)
+  ("cc" taotao-cp-language)
+  ("a" taotao-xxx-language-key)
 
   ("q" nil "quit")))
 
@@ -142,13 +146,13 @@
   ("1" lua-mode)
   ("u" revert-buffer)
   ("h" global-hl-line-mode)
-
   ("j" js-mode)
 
   ("ts" taotao-stick-man-profile)
   ("tm" taotao-msm-profile)
 
   ("ta" ag-files)             ;非win平台这个是需要安装ag，还要继续安装ag.el
+  ("mf" toggle-frame-maximized)         ;最大化窗口
 
   ("q" nil "quit")))
 
