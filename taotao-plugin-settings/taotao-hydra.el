@@ -128,6 +128,7 @@
   ;; ("ms" magit-status)
 
   ("dtw" delete-trailing-whitespace)
+  ("dw" delete-window)
 
   ("wm" whitespace-mode)
 
@@ -153,6 +154,12 @@
 
   ("ta" ag-files)             ;非win平台这个是需要安装ag，还要继续安装ag.el
   ("mf" toggle-frame-maximized)         ;最大化窗口
+
+  ("," previous-multiframe-window)
+  ("." next-multiframe-window)
+  ("0" winner-redo)
+  ("9" winner-undo)
+  ("dw" delete-window)
 
   ("q" nil "quit")))
 
