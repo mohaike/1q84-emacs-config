@@ -13,7 +13,7 @@ Highlighting takes place after `highlight-symbol-idle-delay'.
 
 \(fn &optional ARG)" t nil)
 
-(defalias 'highlight-symbol-at-point 'highlight-symbol)
+(defalias 'taotao-highlight-symbol-at-point 'highlight-symbol)
 
 (autoload 'highlight-symbol "highlight-symbol" "\
 Toggle highlighting of the symbol at point.
