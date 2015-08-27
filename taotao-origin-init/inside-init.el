@@ -862,6 +862,7 @@ This is particularly useful under Mac OSX, where GUI apps are not started from a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun taotao-window ()
   (interactive)
+  (toggle-frame-maximized)
   (delete-other-windows)
   (split-window-right)
   (previous-multiframe-window)
