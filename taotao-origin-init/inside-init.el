@@ -858,11 +858,46 @@ This is particularly useful under Mac OSX, where GUI apps are not started from a
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; frame尺寸设定
+;; 根据系统原有的【toggle-frame-maximized】改的
+;; 系统的那个函数在窗口是默认窗口大小的时候，变成最大
+;; 在窗口最大的时候又变成默认窗口大小，现在的这个是直接变成最大的。
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun taotao-toggle-frame-maximized ()
+  "Toggle maximization state of the selected frame.
+Maximize the selected frame or un-maximize if it is already maximized.
+Respect window manager screen decorations.
+If the frame is in fullscreen mode, don't change its mode,
+just toggle the temporary frame parameter `maximized',
+so the frame will go to the right maximization state
+after disabling fullscreen mode.
+
+Note that with some window managers you may have to set
+`frame-resize-pixelwise' to non-nil in order to make a frame
+appear truly maximized.
+
+See also `toggle-frame-fullscreen'."
+  (interactive)
+  (if (memq (frame-parameter nil 'fullscreen) '(fullscreen fullboth))
+      (modify-frame-parameters
+       nil
+       `((maximized
+	  . ,(if t
+	       'maximized))))
+    (modify-frame-parameters
+     nil
+     `((fullscreen
+	. ,(if t
+	     'maximized))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; window分割策略
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun taotao-window ()
   (interactive)
-  (toggle-frame-maximized)
+  (taotao-toggle-frame-maximized)
   (delete-other-windows)
   (split-window-right)
   (previous-multiframe-window)
