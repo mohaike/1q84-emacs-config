@@ -1060,6 +1060,7 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 相对kill-sexp的delete设定，这个sexp的设定也就是一个symbol的之间的操作
 ;; 比如说forward-sexp, backward-sexp之类的
+;; 以及根据kill-line改写的delete-line
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun delete-sexp (&optional arg)
   "Delete the sexp (balanced expression) following point.
@@ -1070,6 +1071,33 @@ This command assumes point is not in a string or comment."
   (let ((opoint (point)))
     (forward-sexp (or arg 1))
     (delete-region opoint (point))))
+
+(defun delete-line (&optional arg)
+  (interactive "P")
+  (delete-region (point)
+	       ;; It is better to move point to the other end of the kill
+	       ;; before killing.  That way, in a read-only buffer, point
+	       ;; moves across the text that is copied to the kill ring.
+	       ;; The choice has no effect on undo now that undo records
+	       ;; the value of point from before the command was run.
+	       (progn
+		 (if arg
+		     (forward-visible-line (prefix-numeric-value arg))
+		   (if (eobp)
+		       (signal 'end-of-buffer nil))
+		   (let ((end
+			  (save-excursion
+			    (end-of-visible-line) (point))))
+		     (if (or (save-excursion
+			       ;; If trailing whitespace is visible,
+			       ;; don't treat it as nothing.
+			       (unless show-trailing-whitespace
+				 (skip-chars-forward " \t" end))
+			       (= (point) end))
+			     (and kill-whole-line (bolp)))
+			 (forward-visible-line 1)
+		       (goto-char end))))
+		 (point))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 依赖上面的自定义delete-sexp函数

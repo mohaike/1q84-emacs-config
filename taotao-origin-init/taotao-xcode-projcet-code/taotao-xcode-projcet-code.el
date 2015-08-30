@@ -6,14 +6,19 @@
   ;; 证书文件路径
   (find-file "~/Documents/Project/SM/StickMan/proj.ios_mac/StickMan.xcodeproj/project.pbxproj")
   (re-search-forward "PROVISIONING_PROFILE")
-  (forward-char 4)
-  (delete-sexp)
-  (insert-before-markers "f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb")  ;; 签名
+  (forward-char 3)
+  (delete-line)
+  (insert-before-markers "\"f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb\";")  ;; 签名
 
   (re-search-forward "PROVISIONING_PROFILE")
-  (forward-char 4)
-  (delete-sexp)
-  (insert-before-markers "f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb")  ;; 签名
+  (forward-char 3)
+  (delete-line)
+  (insert-before-markers "\"f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb\";")  ;; 签名
+
+  (re-search-forward "PROVISIONING_PROFILE")
+  (forward-char 3)
+  (delete-line)
+  (insert-before-markers "\"f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb\";")  ;; 签名
 
   (save-buffer)
   (kill-this-buffer)
