@@ -134,10 +134,6 @@
 
   ("ts" taotao-screenshot)
 
-  ("m" taotao-mark-language)
-  ("cc" taotao-cp-language)
-  ("a" taotao-xxx-language-key)
-
   ("q" nil "quit")))
 
 (global-set-key
@@ -160,6 +156,11 @@
   ("0" winner-redo)
   ("9" winner-undo)
   ("dw" delete-window)
+
+  (")" copy-word-forward)
+  ("(" copy-word-backward)
+  ("cc" taotao-copy-current-word)
+  ("cl" taotao-copy-end-of-line)
 
   ("q" nil "quit")))
 

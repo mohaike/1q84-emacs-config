@@ -25,7 +25,7 @@
 
 (require 'taotao-autopair)
 
-(require 'taotao-browse-kill-ring)
+(require 'taotao-browse-kill-ring)      ;这个配合emacs自带的(yank-pop)更简直是完美【M-y】
 
 (require 'taotao-anzu)
 

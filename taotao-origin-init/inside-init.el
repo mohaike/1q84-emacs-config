@@ -80,6 +80,42 @@
 (global-set-key (kbd "s-z") 'taotao-mark-line)
 (global-set-key (kbd "s-g") 'keyboard-quit)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; taotao-copy-end-of-line是根据kill-ring-save以及line-end-position想到的
+;; taotao-copy-current-word是根据李杀同学的xah-search-current-word改写的
+;; 而李杀同学的xah-search-current-word又是根据我的建议改进的
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun taotao-copy-end-of-line (&optional arg) ;这个函数会把当前点到行末的字符串全部拷贝起来的
+  (interactive "P")
+  (kill-ring-save (point) (line-end-position))
+  (message "String copied: 「%s」"
+           (buffer-substring-no-properties (point) (line-end-position)))
+  )
+
+(defun taotao-copy-current-word ()      ;这个函数会拷贝全部黏在一起的字符串
+  (interactive)
+  (let ( ξp1 ξp2 ξsstr )
+    (if (use-region-p)
+        (progn
+          (setq ξp1 (region-beginning))
+          (setq ξp2 (region-end)))
+      (save-excursion
+        (skip-chars-backward "-_A-Za-z0-9")
+        (setq ξp1 (point))
+        (right-char)
+        (skip-chars-forward "-_A-Za-z0-9")
+        (setq ξp2 (point))))
+    (setq ξsstr (buffer-substring-no-properties ξp1 ξp2))
+    (setq mark-active nil)
+    ;; (when (< ξp1 (point))
+    ;;   (goto-char ξp1))                  ;这个是用来移动到那个单词的前面，不过拷贝的话是不需要用到这个的
+    (kill-new ξsstr)
+    (message "Current word copied: 「%s」" ξsstr)))
+
+(global-set-key (kbd "M-s-x") 'taotao-copy-end-of-line)
+
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 整行移动
@@ -600,7 +636,9 @@ occurence of CHAR."
   (save-excursion
     (let ((beg (get-point begin-of-thing 1))
        (end (get-point end-of-thing arg)))
-      (copy-region-as-kill beg end)))
+      (copy-region-as-kill beg end)
+      (message "Word copied: 「%s」" (buffer-substring-no-properties beg end))
+      ))
 )
 
 (defun paste-to-mark(&optional arg)
@@ -621,7 +659,6 @@ occurence of CHAR."
  "Copy words at point into kill-ring"
   (interactive "P")
   (copy-thing 'forward-word 'backward-word arg)
-  ;; (message "File path copied: 「%s」" fPath)
 )
 
 (defun copy-word-backward (&optional arg)
@@ -1035,8 +1072,6 @@ URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'"
 ;; 加载hct-macro宏文件
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-file "~/.emacs.d/taotao-origin-init/taotao-macros/hct-macro.macs") ;加载hct-macro宏文件
-
-(global-set-key (kbd "M-s-x") 'hct-cp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 全屏
