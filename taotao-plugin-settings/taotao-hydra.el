@@ -146,6 +146,8 @@
   ("j" js-mode)
 
   ("ts" taotao-stick-man-profile)
+  ("tcs" taotao-stick-man-clear-profile)
+
   ("tm" taotao-msm-profile)
 
   ("ta" ag-files)             ;非win平台这个是需要安装ag，还要继续安装ag.el
