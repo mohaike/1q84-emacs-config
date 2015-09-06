@@ -15,8 +15,10 @@
        (kill-ring-save (region-beginning) (region-end))
      (let ((beg (progn (back-to-indentation) (point)))
            (end (line-end-position arg)))
-       (copy-region-as-kill beg end))))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       (copy-region-as-kill beg end)
+       (message "Line string copied: 「%s」"
+                (buffer-substring-no-properties beg end)))))
+
 (defun taotao-copy (&optional arg)
    "switch action by whether mark is active"
    (interactive "P")
@@ -89,8 +91,7 @@
   (interactive "P")
   (kill-ring-save (point) (line-end-position))
   (message "String copied: 「%s」"
-           (buffer-substring-no-properties (point) (line-end-position)))
-  )
+           (buffer-substring-no-properties (point) (line-end-position))))
 
 (defun taotao-copy-current-word ()      ;这个函数会拷贝全部黏在一起的字符串
   (interactive)
