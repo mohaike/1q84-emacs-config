@@ -1,11 +1,12 @@
 (add-to-list 'auto-mode-alist '("\\.mm\\'" . objc-mode))
 
-(add-to-list 'magic-mode-alist
-                `(,(lambda ()
-                     (and (string= (file-name-extension buffer-file-name) "h")
-                          (re-search-forward "@\\<interface\\>"
-					     magic-mode-regexp-match-limit t)))
-                  . objc-mode))
+;; 先注掉这些，这个在org发布html的时候会报错
+;; (add-to-list 'magic-mode-alist
+;;                 `(,(lambda ()
+;;                      (and (string= (file-name-extension buffer-file-name) "h")
+;;                           (re-search-forward "@\\<interface\\>"
+;; 					     magic-mode-regexp-match-limit t)))
+;;                   . objc-mode))
 
 (require 'find-file) ;; for the "cc-other-file-alist" variable
 

@@ -935,6 +935,9 @@ See also `toggle-frame-fullscreen'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun taotao-window ()
   (interactive)
+  (setq current-buffer-name (buffer-name)) ;先保存当前buffer的名字
+  (shell)
+
   (taotao-toggle-frame-maximized)
   (delete-other-windows)
   (split-window-right)
@@ -948,9 +951,11 @@ See also `toggle-frame-fullscreen'."
   (split-window-below)
   (switch-to-buffer "*scratch*")
   (next-multiframe-window)
-  (shell)
+  (switch-to-buffer "*shell*")
   (previous-multiframe-window)
   (previous-multiframe-window)
+
+  (switch-to-buffer current-buffer-name) ;最后切回最开始的Buffer
   )
 
 (defun taotao-gs-window ()
