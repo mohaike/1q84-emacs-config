@@ -143,7 +143,7 @@
   ("1" lua-mode)
   ("u" revert-buffer)
   ("h" global-hl-line-mode)
-  ("j" js-mode)
+  ("j" javascript-mode)
 
   ("ts" taotao-stick-man-profile)
   ("tcs" taotao-stick-man-clear-profile)
