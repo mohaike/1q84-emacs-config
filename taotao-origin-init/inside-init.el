@@ -935,11 +935,11 @@ See also `toggle-frame-fullscreen'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun taotao-window ()
   (interactive)
+  (delete-other-windows)
   (setq current-buffer-name (buffer-name)) ;先保存当前buffer的名字
   (shell)
 
   (taotao-toggle-frame-maximized)
-  (delete-other-windows)
   (split-window-right)
   (previous-multiframe-window)
   (split-window-right)
