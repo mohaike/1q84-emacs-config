@@ -89,6 +89,7 @@ Interface concepts
 
 Modes and Buffers
 
+* Switching Buffers::
 * Naming Buffers::
 * Quitting Windows::
 
@@ -664,38 +665,172 @@ buffers whose major-modes derive from ‘magit-mode’.
 buffer, called the *status buffer*.  Its usually from this buffer that
 the user invokes Git commands, or creates or visits other buffers.
 
+‘M-x magit-toggle-buffer-lock’     (‘magit-toggle-buffer-lock’)
+
+     This command locks the current buffer to its value or if the buffer
+     is already locked, then it unlocks it.
+
+     Locking a buffer to its value, prevents it from being reused to
+     display another value.  The name of a locked buffer contains its
+     value, which allows telling it apart from other locked buffers and
+     the unlocked buffer.
+
+     Not all Magit buffers can be locked to their values, for example it
+     wouldn’t make sense to lock a status buffer.
+
+     There can only be a single unlocked buffer using a certain
+     major-mode per repository.  So when a buffer is being unlocked and
+     another unlocked buffer already exists for that mode and
+     repository, then the former buffer is instead deleted and the
+     latter is displayed in its place.
+
 * Menu:
 
+* Switching Buffers::
 * Naming Buffers::
 * Quitting Windows::
 
 
-File: magit.info,  Node: Naming Buffers,  Next: Quitting Windows,  Up: Modes and Buffers
+File: magit.info,  Node: Switching Buffers,  Next: Naming Buffers,  Up: Modes and Buffers
 
-4.1.1 Naming Buffers
+4.1.1 Switching Buffers
+-----------------------
+
+ -- Function: magit-display-buffer buffer
+
+     This function is a wrapper around ‘display-buffer’ and is used to
+     display any Magit buffer.  It displays BUFFER in some window and,
+     unlike ‘display-buffer’, also selects that window, provided
+     ‘magit-display-buffer-noselect’ is nil.  It also runs the hooks
+     mentioned below.
+
+ -- Variable: magit-display-buffer-noselect
+
+     When this is non-nil, then ‘magit-display-buffer’ only displays the
+     buffer but forgoes also selecting the window.  This variable should
+     not be set globally, it is only intended to be let-bound, by code
+     that automatically updates "the other window".  This is used for
+     example when the revision buffer is updated when you move inside
+     the log buffer.
+
+ -- User Option: magit-display-buffer-function
+
+     The function specified here is called by ‘magit-display-buffer’
+     with one argument, a buffer, to actually display that buffer.  This
+     function should call ‘display-buffer’ with that buffer as first and
+     a list of display actions as second argument.
+
+     Instead of using a wrapper around ‘display-buffer’, that function
+     itself can be used here, in which case the display actions have to
+     be specified by adding them to ‘display-buffer-alist’ instead.
+
+     To learn about display actions, see *note (elisp)Choosing a Window
+     for Display::.
+
+ -- Function: magit-display-buffer-traditional buffer
+
+     This function is the current default value of option
+     ‘magit-display-buffer-function’.  Before that option and this
+     function were added, the behavior was hard-coded in many places all
+     over the code base but now all the rules are contained in this one
+     function (except for the "noselect" special case mentioned above).
+
+     If you want to use different rules, then a good way of doing that
+     is to start with a copy of this function and then adjust it to your
+     needs.  More functions to choose from will be added in the future,
+     and eventually the default will change.
+
+ -- User Option: magit-pre-display-buffer-hook
+
+     This hook is run by ‘magit-display-buffer’ before displaying the
+     buffer.
+
+ -- Function: magit-save-window-configuration
+
+     This function saves the current window configuration.  Later when
+     the buffer is buried, it may be restored by
+     ‘magit-restore-window-configuration’.
+
+ -- User Option: magit-post-display-buffer-hook
+
+     This hook is run by ‘magit-display-buffer’ after displaying the
+     buffer.
+
+ -- Function: magit-maybe-set-dedicated
+
+     This function remembers when a new window was created to display
+     the buffer.  That information is used by ‘magit-mode-quit-window’,
+     to determine whether the window should be deleted when its last
+     Magit buffer is buried.
+
+
+File: magit.info,  Node: Naming Buffers,  Next: Quitting Windows,  Prev: Switching Buffers,  Up: Modes and Buffers
+
+4.1.2 Naming Buffers
 --------------------
 
-While it often is enough to have one buffer of a certain Magit mode per
-repository, this is not always the case.  You might, for example, want
-to view the diffs for two commits at the same time.  To do so, first
-rename the existing revision buffer.  Then show another commit.  Usually
-that would reuse the existing buffer, but because its name no longer
-matches the default name, a new buffer is created instead.  The new
-buffer uses the default name, and therefore will be reused to show other
-commits as usual.
+ -- User Option: magit-generate-buffer-name-function
 
-‘M-x magit-rename-buffer’     (‘magit-rename-buffer’)
+     The function used to generate the names of Magit buffers.
 
-     This command changes the name of the current Magit buffer by
-     appending ‘<N>’ and thereby keeping Magit from re-using it to
-     display other information of the same kind.
+     Such a function should take ‘magit-uniquify-buffer-names’ as well
+     as ‘magit-buffer-name-format’ into account.  If it doesn’t, then
+     its doc-string should say so.  If it supports %-sequences not
+     mentioned in the doc-string of ‘magit-buffer-name-format’, then its
+     own doc-string should describe them.
 
-     With a prefix argument, the user can pick an arbitrary name.
+ -- Function: magit-generate-buffer-name-default-function mode
+
+     This function returns a buffer name suitable for a buffer whose
+     major-mode is MODE and which shows information about the repository
+     in which ‘default-directory’ is located.
+
+     This function uses ‘magit-buffer-name-format’, supporting the
+     %-sequences mentioned the documentation of that option.  It also
+     respects ‘magit-uniquify-buffer-names’.
+
+ -- User Option: magit-buffer-name-format
+
+     The format string used to name Magit buffers.
+
+     At least the following %-sequences are supported:
+
+        • ‘%m’ The name of the major-mode, but with the ‘-mode’ suffix
+          removed.
+
+        • ‘%M’ Like ‘%m’ but abbreviate ‘magit-status-mode’ as ‘magit’.
+
+        • ‘%v’ The value the buffer is locked to, in parentheses, if it
+          is the buffer is actually locked to its value.  An empty
+          string otherwise.
+
+        • ‘%V’ Like ‘%v’, but the string is prefixed with a space,
+          unless it is an empty string.
+
+        • ‘%t’ The top-level directory of the working tree of the
+          repository, or if ‘magit-uniquify-buffer-name’ is non-nil an
+          abbreviation of that.
+     The value should always contain either ‘%m’ or ‘%M’ as well as
+     ‘%t’.  If ‘magit-uniquify-buffer-name’ is non-nil, then the value
+     must end with ‘%t’.
+
+ -- User Option: magit-uniquify-buffer-names
+
+     This option controls whether the names of Magit buffers are
+     uniquified.  If the names are not being uniquified, then they
+     contain the full name to the top-level of the working tree of the
+     corresponding repository.  If they are being uniquified, then they
+     end with the basename of the top-level, or if that would conflict
+     with the name used for other buffers, then the names of all these
+     buffers are adjusted until they no longer conflict.
+
+     This is done using the ‘uniquify’ package; custoize its options to
+     control how buffer names are uniquified.
 
 
 File: magit.info,  Node: Quitting Windows,  Prev: Naming Buffers,  Up: Modes and Buffers
 
-4.1.2 Quitting Windows
+4.1.3 Quitting Windows
 ----------------------
 
 ‘q’     (‘magit-mode-bury-buffer’)
@@ -1704,19 +1839,6 @@ File: magit.info,  Node: Status options,  Prev: Status header sections,  Up: Sta
  -- User Option: magit-status-refresh-hook
 
      Hook run after a status buffer has been refreshed.
-
- -- User Option: magit-status-buffer-switch-function
-
-     Function used by ‘magit-status’ to switch to a status buffer.  The
-     function is given one argument, the status buffer.
-
- -- User Option: magit-status-buffer-name-format
-
-     Name format for buffers used to display a repository’s status.
-
-     The following ‘format’-like specs are supported: ‘%a’ the absolute
-     filename of the repository top-level.  ‘%b’ the basename of the
-     repository top-level.
 
  -- User Option: magit-log-section-args
 
@@ -6277,12 +6399,12 @@ Appendix B Keystroke Index
 * M-x magit-find-file-other-window:      Visiting blobs.      (line  11)
 * M-x magit-init:                        Repository setup.    (line   6)
 * M-x magit-log-buffer-file:             Logging.             (line  65)
-* M-x magit-rename-buffer:               Naming Buffers.      (line  15)
 * M-x magit-reset-hard:                  Resetting.           (line  32)
 * M-x magit-reset-head:                  Resetting.           (line  21)
 * M-x magit-reset-soft:                  Resetting.           (line  26)
 * M-x magit-stage-file:                  Staging from file-visiting buffers.
                                                               (line  10)
+* M-x magit-toggle-buffer-lock:          Modes and Buffers.   (line  17)
 * M-x magit-unstage-all:                 Staging and unstaging.
                                                               (line  52)
 * M-x magit-unstage-file:                Staging from file-visiting buffers.
@@ -6690,7 +6812,6 @@ Appendix C Command Index
 * magit-remote-remove:                   Remotes.             (line  28)
 * magit-remote-rename:                   Remotes.             (line  18)
 * magit-remote-set-url:                  Remotes.             (line  23)
-* magit-rename-buffer:                   Naming Buffers.      (line  15)
 * magit-request-pull:                    Creating and sending patches.
                                                               (line  17)
 * magit-reset:                           Resetting.           (line   8)
@@ -6792,6 +6913,7 @@ Appendix C Command Index
 * magit-tag-delete:                      Tagging.             (line  18)
 * magit-tag-popup:                       Tagging.             (line   8)
 * magit-tag-prune:                       Tagging.             (line  24)
+* magit-toggle-buffer-lock:              Modes and Buffers.   (line  17)
 * magit-toggle-margin:                   Refreshing logs.     (line  36)
 * magit-unstage:                         Staging and unstaging.
                                                               (line  37)
@@ -6851,6 +6973,10 @@ Appendix D Function Index
 * magit-define-section-jumper:           Creating sections.   (line  76)
 * magit-diff-scope:                      Matching sections.   (line 105)
 * magit-diff-type:                       Matching sections.   (line  82)
+* magit-display-buffer:                  Switching Buffers.   (line   6)
+* magit-display-buffer-traditional:      Switching Buffers.   (line  37)
+* magit-generate-buffer-name-default-function: Naming Buffers.
+                                                              (line  16)
 * magit-get-section:                     Matching sections.   (line  16)
 * magit-git:                             Calling Git for effect.
                                                               (line  65)
@@ -6920,6 +7046,7 @@ Appendix D Function Index
                                                               (line  53)
 * magit-log-maybe-show-commit:           Section movement.    (line  57)
 * magit-log-maybe-show-more-commits:     Section movement.    (line  64)
+* magit-maybe-set-dedicated:             Switching Buffers.   (line  66)
 * magit-mode-display-buffer:             Refreshing buffers.  (line  32)
 * magit-mode-quit-window:                Quitting Windows.    (line  31)
 * magit-mode-setup:                      Refreshing buffers.  (line  17)
@@ -6938,6 +7065,7 @@ Appendix D Function Index
                                                               (line  40)
 * magit-run-git-with-logfile:            Calling Git for effect.
                                                               (line  56)
+* magit-save-window-configuration:       Switching Buffers.   (line  55)
 * magit-section-case:                    Matching sections.   (line  58)
 * magit-section-hide:                    Section visibility.  (line  51)
 * magit-section-hide-children:           Section visibility.  (line  66)
@@ -7002,6 +7130,7 @@ Appendix E Variable Index
 * magit-blame-show-headings:             Blaming.             (line  91)
 * magit-blame-time-format:               Blaming.             (line  87)
 * magit-branch-read-upstream-first:      Branching.           (line  90)
+* magit-buffer-name-format:              Naming Buffers.      (line  26)
 * magit-bury-buffer-function:            Quitting Windows.    (line  11)
 * magit-commit-ask-to-stage:             Initiating a commit. (line  74)
 * magit-commit-extend-override-date:     Initiating a commit. (line  79)
@@ -7015,8 +7144,11 @@ Appendix E Variable Index
 * magit-diff-highlight-trailing:         Diff options.        (line  59)
 * magit-diff-paint-whitespace:           Diff options.        (line  51)
 * magit-diff-refine-hunk:                Diff options.        (line  41)
+* magit-display-buffer-function:         Switching Buffers.   (line  23)
+* magit-display-buffer-noselect:         Switching Buffers.   (line  14)
 * magit-ediff-dwim-show-on-hunks:        Ediffing.            (line  66)
 * magit-ediff-quit-hook:                 Ediffing.            (line  74)
+* magit-generate-buffer-name-function:   Naming Buffers.      (line   6)
 * magit-git-debug:                       Viewing Git output.  (line  23)
 * magit-git-debug <1>:                   Getting a value from Git.
                                                               (line  64)
@@ -7024,7 +7156,7 @@ Appendix E Variable Index
 * magit-git-global-arguments:            Global Git arguments.
                                                               (line   6)
 * magit-log-auto-more:                   Log Buffer.          (line  61)
-* magit-log-section-args:                Status options.      (line  23)
+* magit-log-section-args:                Status options.      (line  10)
 * magit-log-section-commit-count:        Status sections.     (line  96)
 * magit-log-show-margin:                 Log Buffer.          (line  67)
 * magit-log-show-refname-after-summary:  Log Buffer.          (line  79)
@@ -7034,6 +7166,8 @@ Appendix E Variable Index
                                                               (line  96)
 * magit-pop-revision-stack-format:       Editing commit messages.
                                                               (line  92)
+* magit-post-display-buffer-hook:        Switching Buffers.   (line  61)
+* magit-pre-display-buffer-hook:         Switching Buffers.   (line  50)
 * magit-process-raise-error:             Calling Git for effect.
                                                               (line 151)
 * magit-push-always-verify:              Pushing.             (line  61)
@@ -7059,14 +7193,13 @@ Appendix E Variable Index
 * magit-section-movement-hook:           Section movement.    (line  39)
 * magit-section-set-visibility-hook:     Section visibility.  (line  80)
 * magit-section-show-child-count:        Section options.     (line   9)
-* magit-status-buffer-name-format:       Status options.      (line  15)
-* magit-status-buffer-switch-function:   Status options.      (line  10)
 * magit-status-headers-hook:             Status header sections.
                                                               (line  17)
 * magit-status-refresh-hook:             Status options.      (line   6)
 * magit-status-sections-hook:            Status sections.     (line  10)
 * magit-this-process:                    Calling Git for effect.
                                                               (line 146)
+* magit-uniquify-buffer-names:           Naming Buffers.      (line  51)
 * magit-visit-ref-create:                References buffer.   (line 115)
 * magit-wip-after-apply-mode:            Wip modes.           (line  99)
 * magit-wip-after-apply-mode-lighter:    Wip modes.           (line 141)
@@ -7080,119 +7213,120 @@ Appendix E Variable Index
 
 Tag Table:
 Node: Top1217
-Node: Introduction5487
-Node: Installation10180
-Node: Updating from an older release10555
-Node: Installing from an Elpa archive12150
-Node: Installing from the Git repository13729
-Node: Post-installation tasks15973
-Node: Getting started17499
-Node: Interface concepts23234
-Node: Modes and Buffers23560
-Node: Naming Buffers24293
-Node: Quitting Windows25259
-Node: Automatic save26845
-Node: Automatic refresh and revert27910
-Node: Sections31875
-Node: Section movement32824
-Node: Section visibility35379
-Node: Section hooks38970
-Node: Section types and values41008
-Node: Section options42278
-Node: Popup buffers and prefix commands42750
-Node: Completion and confirmation44064
-Node: Running Git46970
-Node: Viewing Git output47206
-Node: Running Git manually48206
-Node: Git executable50332
-Node: Global Git arguments52339
-Node: Inspecting53146
-Node: Status buffer54273
-Node: Status sections56817
-Node: Status header sections61160
-Node: Status options62990
-Node: Logging64203
-Node: Refreshing logs66570
-Node: Log Buffer67955
-Node: Select from log71044
-Node: Reflog71984
-Node: Diffing72462
-Node: Refreshing diffs75458
-Node: Diff buffer78438
-Node: Diff options80340
-Node: Revision buffer83223
-Node: Ediffing84178
-Node: References buffer87227
-Node: References sections91937
-Node: Bisecting92812
-Node: Visiting blobs94308
-Node: Blaming94817
-Node: Manipulating98137
-Node: Repository setup98429
-Node: Staging and unstaging99192
-Node: Staging from file-visiting buffers101808
-Node: Applying102976
-Node: Committing104619
-Node: Initiating a commit105202
-Node: Editing commit messages108514
-Node: Branching118909
-Node: Merging122601
-Node: Rebasing124685
-Node: Editing rebase sequences127672
-Node: Rebase sequence log130706
-Node: Cherry picking137450
-Node: Reverting139056
-Node: Resetting140419
-Node: Stashing141909
-Node: Transferring145054
-Node: Remotes145292
-Node: Fetching146095
-Node: Pulling146911
-Node: Pushing147411
-Node: Creating and sending patches150389
-Node: Applying patches151084
-Node: Miscellaneous152082
-Node: Tagging152373
-Node: Notes153158
-Node: Submodules155683
-Node: Common commands157003
-Node: Wip modes158751
-Node: Minor mode for buffers visiting files165487
-Node: Minor mode for buffers visiting blobs167630
-Node: Customizing168435
-Node: Per-repository configuration170107
-Node: Essential settings171755
-Node: Safety172079
-Node: Performance175260
-Node: Plumbing181138
-Node: Calling Git181766
-Node: Getting a value from Git183289
-Node: Calling Git for effect186393
-Node: Section plumbing192897
-Node: Creating sections193125
-Node: Section selection196928
-Node: Matching sections198608
-Node: Refreshing buffers203810
-Node: Conventions206945
-Node: Confirmation and completion207122
-Node: Theming Faces208020
-Node: FAQ216171
-Node: Magit is slow217180
-Node: I am having problems committing217346
-Node: I am using an Emacs release older than 244217744
-Node: I am using a Git release older than 194219190
-Node: I am using MS Windows and cannot push with Magit220029
-Node: How to install the gitman info manual?220607
-Node: How can I show Git's output?223189
-Node: Expanding a file to show the diff causes it to disappear223999
-Node: Magit claims repository accessed using Tramp does not exist224539
-Node: Can Magit be used as ediff-version-control-package?225685
-Node: How to show diffs for gpg-encrypted files?227725
-Node: Emacs 245 hangs when loading Magit228316
-Node: Keystroke Index228835
-Node: Command Index256245
-Node: Function Index284319
-Node: Variable Index294373
+Node: Introduction5509
+Node: Installation10202
+Node: Updating from an older release10577
+Node: Installing from an Elpa archive12172
+Node: Installing from the Git repository13751
+Node: Post-installation tasks15995
+Node: Getting started17521
+Node: Interface concepts23256
+Node: Modes and Buffers23582
+Node: Switching Buffers25197
+Node: Naming Buffers28194
+Node: Quitting Windows30902
+Node: Automatic save32488
+Node: Automatic refresh and revert33553
+Node: Sections37518
+Node: Section movement38467
+Node: Section visibility41022
+Node: Section hooks44613
+Node: Section types and values46651
+Node: Section options47921
+Node: Popup buffers and prefix commands48393
+Node: Completion and confirmation49707
+Node: Running Git52613
+Node: Viewing Git output52849
+Node: Running Git manually53849
+Node: Git executable55975
+Node: Global Git arguments57982
+Node: Inspecting58789
+Node: Status buffer59916
+Node: Status sections62460
+Node: Status header sections66803
+Node: Status options68633
+Node: Logging69357
+Node: Refreshing logs71724
+Node: Log Buffer73109
+Node: Select from log76198
+Node: Reflog77138
+Node: Diffing77616
+Node: Refreshing diffs80612
+Node: Diff buffer83592
+Node: Diff options85494
+Node: Revision buffer88377
+Node: Ediffing89332
+Node: References buffer92381
+Node: References sections97091
+Node: Bisecting97966
+Node: Visiting blobs99462
+Node: Blaming99971
+Node: Manipulating103291
+Node: Repository setup103583
+Node: Staging and unstaging104346
+Node: Staging from file-visiting buffers106962
+Node: Applying108130
+Node: Committing109773
+Node: Initiating a commit110356
+Node: Editing commit messages113668
+Node: Branching124063
+Node: Merging127755
+Node: Rebasing129839
+Node: Editing rebase sequences132826
+Node: Rebase sequence log135860
+Node: Cherry picking142604
+Node: Reverting144210
+Node: Resetting145573
+Node: Stashing147063
+Node: Transferring150208
+Node: Remotes150446
+Node: Fetching151249
+Node: Pulling152065
+Node: Pushing152565
+Node: Creating and sending patches155543
+Node: Applying patches156238
+Node: Miscellaneous157236
+Node: Tagging157527
+Node: Notes158312
+Node: Submodules160837
+Node: Common commands162157
+Node: Wip modes163905
+Node: Minor mode for buffers visiting files170641
+Node: Minor mode for buffers visiting blobs172784
+Node: Customizing173589
+Node: Per-repository configuration175261
+Node: Essential settings176909
+Node: Safety177233
+Node: Performance180414
+Node: Plumbing186292
+Node: Calling Git186920
+Node: Getting a value from Git188443
+Node: Calling Git for effect191547
+Node: Section plumbing198051
+Node: Creating sections198279
+Node: Section selection202082
+Node: Matching sections203762
+Node: Refreshing buffers208964
+Node: Conventions212099
+Node: Confirmation and completion212276
+Node: Theming Faces213174
+Node: FAQ221325
+Node: Magit is slow222334
+Node: I am having problems committing222500
+Node: I am using an Emacs release older than 244222898
+Node: I am using a Git release older than 194224344
+Node: I am using MS Windows and cannot push with Magit225183
+Node: How to install the gitman info manual?225761
+Node: How can I show Git's output?228343
+Node: Expanding a file to show the diff causes it to disappear229153
+Node: Magit claims repository accessed using Tramp does not exist229693
+Node: Can Magit be used as ediff-version-control-package?230839
+Node: How to show diffs for gpg-encrypted files?232879
+Node: Emacs 245 hangs when loading Magit233470
+Node: Keystroke Index233989
+Node: Command Index261399
+Node: Function Index289473
+Node: Variable Index299955
 
 End Tag Table
 
