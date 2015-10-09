@@ -2934,20 +2934,15 @@ apply variants are described in the next section.
 
      Remove the change at point from the staging area.
 
-‘U’     (‘magit-reset-index’)
+‘U’     (‘magit-unstage-all’)
+
+     Remove all changes from the staging area.
+
+‘M-x magit-reset-index’     (‘magit-reset-index’)
 
      Reset the index to some commit.  The commit is read from the user
      and defaults to the commit at point.  If there is no commit at
      point, then it defaults to ‘HEAD’.
-
-     So ‘U RET’ with no commit at point does the inverse of ‘S’ (or
-     actually ‘S yes RET’), i.e.  "unstage all staged changes".  If you
-     would rather use a command which always does just that, then rebind
-     ‘U’ to ‘magit-unstage-all’.
-
-‘M-x magit-unstage-all’     (‘magit-unstage-all’)
-
-     Remove all changes from the staging area.
 
    To stage a smaller unit than a range of lines, similar to ‘git add
 --patch’ followed by ‘e’ would do, then you can use ‘magit-ediff-stage’
@@ -3600,7 +3595,7 @@ only have to redo half the work.
 following commands as they always use that argument anyway, even if it
 is not enabled in the popup.
 
-‘r e’     (‘magit-rebase-interactive’)
+‘r i’     (‘magit-rebase-interactive’)
 
      Start an interactive rebase sequence.
 
@@ -3617,7 +3612,7 @@ is not enabled in the popup.
 
      Combine squash and fixup commits with their intended targets.
 
-‘r s’     (‘magit-rebase-edit-commit’)
+‘r e’     (‘magit-rebase-edit-commit’)
 
      Edit a single older commit using rebase.
 
@@ -3997,7 +3992,7 @@ Also see *note (gitman)git-reset:: .
      defaulting to the commit at point.  The working tree is kept as-is.
      With a prefix argument also reset the working tree.
 
-‘U’     (‘magit-reset-index’)
+‘M-x magit-reset-index’     (‘magit-reset-index’)
 
      Reset the index to some commit read from the user and defaulting to
      the commit at point.  Keep the ‘HEAD’ and working tree as-is, so if
@@ -6401,12 +6396,13 @@ Appendix B Keystroke Index
 * M-x magit-log-buffer-file:             Logging.             (line  65)
 * M-x magit-reset-hard:                  Resetting.           (line  32)
 * M-x magit-reset-head:                  Resetting.           (line  21)
+* M-x magit-reset-index:                 Staging and unstaging.
+                                                              (line  45)
+* M-x magit-reset-index <1>:             Resetting.           (line  14)
 * M-x magit-reset-soft:                  Resetting.           (line  26)
 * M-x magit-stage-file:                  Staging from file-visiting buffers.
                                                               (line  10)
 * M-x magit-toggle-buffer-lock:          Modes and Buffers.   (line  17)
-* M-x magit-unstage-all:                 Staging and unstaging.
-                                                              (line  52)
 * M-x magit-unstage-file:                Staging from file-visiting buffers.
                                                               (line  18)
 * M-x magit-version:                     Git executable.      (line  17)
@@ -6451,15 +6447,15 @@ Appendix B Keystroke Index
 * r <1>:                                 Editing rebase sequences.
                                                               (line  51)
 * r a:                                   Rebasing.            (line  83)
-* r e:                                   Rebasing.            (line  43)
+* r e:                                   Rebasing.            (line  60)
 * r e <1>:                               Rebasing.            (line  79)
 * r f:                                   Rebasing.            (line  56)
+* r i:                                   Rebasing.            (line  43)
 * r l:                                   Rebasing.            (line  47)
 * r o:                                   Rebasing.            (line  21)
 * r r:                                   Rebasing.            (line  16)
 * r r <1>:                               Rebasing.            (line  71)
-* r s:                                   Rebasing.            (line  60)
-* r s <1>:                               Rebasing.            (line  75)
+* r s:                                   Rebasing.            (line  75)
 * r w:                                   Rebasing.            (line  64)
 * RET:                                   Diff buffer.         (line   6)
 * RET <1>:                               References buffer.   (line  99)
@@ -6497,7 +6493,6 @@ Appendix B Keystroke Index
                                                               (line  37)
 * U:                                     Staging and unstaging.
                                                               (line  41)
-* U <1>:                                 Resetting.           (line  14)
 * v:                                     Applying.            (line  41)
 * V:                                     Reverting.           (line   6)
 * V A:                                   Reverting.           (line  30)
@@ -6818,7 +6813,7 @@ Appendix C Command Index
 * magit-reset-hard:                      Resetting.           (line  32)
 * magit-reset-head:                      Resetting.           (line  21)
 * magit-reset-index:                     Staging and unstaging.
-                                                              (line  41)
+                                                              (line  45)
 * magit-reset-index <1>:                 Resetting.           (line  14)
 * magit-reset-soft:                      Resetting.           (line  26)
 * magit-reverse:                         Applying.            (line  41)
@@ -6918,7 +6913,7 @@ Appendix C Command Index
 * magit-unstage:                         Staging and unstaging.
                                                               (line  37)
 * magit-unstage-all:                     Staging and unstaging.
-                                                              (line  52)
+                                                              (line  41)
 * magit-unstage-file:                    Staging from file-visiting buffers.
                                                               (line  18)
 * magit-unstage-file <1>:                Minor mode for buffers visiting files.
@@ -7264,69 +7259,69 @@ Node: Blaming99971
 Node: Manipulating103291
 Node: Repository setup103583
 Node: Staging and unstaging104346
-Node: Staging from file-visiting buffers106962
-Node: Applying108130
-Node: Committing109773
-Node: Initiating a commit110356
-Node: Editing commit messages113668
-Node: Branching124063
-Node: Merging127755
-Node: Rebasing129839
-Node: Editing rebase sequences132826
-Node: Rebase sequence log135860
-Node: Cherry picking142604
-Node: Reverting144210
-Node: Resetting145573
-Node: Stashing147063
-Node: Transferring150208
-Node: Remotes150446
-Node: Fetching151249
-Node: Pulling152065
-Node: Pushing152565
-Node: Creating and sending patches155543
-Node: Applying patches156238
-Node: Miscellaneous157236
-Node: Tagging157527
-Node: Notes158312
-Node: Submodules160837
-Node: Common commands162157
-Node: Wip modes163905
-Node: Minor mode for buffers visiting files170641
-Node: Minor mode for buffers visiting blobs172784
-Node: Customizing173589
-Node: Per-repository configuration175261
-Node: Essential settings176909
-Node: Safety177233
-Node: Performance180414
-Node: Plumbing186292
-Node: Calling Git186920
-Node: Getting a value from Git188443
-Node: Calling Git for effect191547
-Node: Section plumbing198051
-Node: Creating sections198279
-Node: Section selection202082
-Node: Matching sections203762
-Node: Refreshing buffers208964
-Node: Conventions212099
-Node: Confirmation and completion212276
-Node: Theming Faces213174
-Node: FAQ221325
-Node: Magit is slow222334
-Node: I am having problems committing222500
-Node: I am using an Emacs release older than 244222898
-Node: I am using a Git release older than 194224344
-Node: I am using MS Windows and cannot push with Magit225183
-Node: How to install the gitman info manual?225761
-Node: How can I show Git's output?228343
-Node: Expanding a file to show the diff causes it to disappear229153
-Node: Magit claims repository accessed using Tramp does not exist229693
-Node: Can Magit be used as ediff-version-control-package?230839
-Node: How to show diffs for gpg-encrypted files?232879
-Node: Emacs 245 hangs when loading Magit233470
-Node: Keystroke Index233989
-Node: Command Index261399
-Node: Function Index289473
-Node: Variable Index299955
+Node: Staging from file-visiting buffers106695
+Node: Applying107863
+Node: Committing109506
+Node: Initiating a commit110089
+Node: Editing commit messages113401
+Node: Branching123796
+Node: Merging127488
+Node: Rebasing129572
+Node: Editing rebase sequences132559
+Node: Rebase sequence log135593
+Node: Cherry picking142337
+Node: Reverting143943
+Node: Resetting145306
+Node: Stashing146816
+Node: Transferring149961
+Node: Remotes150199
+Node: Fetching151002
+Node: Pulling151818
+Node: Pushing152318
+Node: Creating and sending patches155296
+Node: Applying patches155991
+Node: Miscellaneous156989
+Node: Tagging157280
+Node: Notes158065
+Node: Submodules160590
+Node: Common commands161910
+Node: Wip modes163658
+Node: Minor mode for buffers visiting files170394
+Node: Minor mode for buffers visiting blobs172537
+Node: Customizing173342
+Node: Per-repository configuration175014
+Node: Essential settings176662
+Node: Safety176986
+Node: Performance180167
+Node: Plumbing186045
+Node: Calling Git186673
+Node: Getting a value from Git188196
+Node: Calling Git for effect191300
+Node: Section plumbing197804
+Node: Creating sections198032
+Node: Section selection201835
+Node: Matching sections203515
+Node: Refreshing buffers208717
+Node: Conventions211852
+Node: Confirmation and completion212029
+Node: Theming Faces212927
+Node: FAQ221078
+Node: Magit is slow222087
+Node: I am having problems committing222253
+Node: I am using an Emacs release older than 244222651
+Node: I am using a Git release older than 194224097
+Node: I am using MS Windows and cannot push with Magit224936
+Node: How to install the gitman info manual?225514
+Node: How can I show Git's output?228096
+Node: Expanding a file to show the diff causes it to disappear228906
+Node: Magit claims repository accessed using Tramp does not exist229446
+Node: Can Magit be used as ediff-version-control-package?230592
+Node: How to show diffs for gpg-encrypted files?232632
+Node: Emacs 245 hangs when loading Magit233223
+Node: Keystroke Index233742
+Node: Command Index261152
+Node: Function Index289226
+Node: Variable Index299708
 
 End Tag Table
 

@@ -57,6 +57,16 @@
              magit-xref-setup
              bug-reference-mode))
 
+(defcustom magit-mode-setup-hook
+  '(magit-maybe-save-repository-buffers
+    magit-maybe-show-margin)
+  "Hook run by `magit-mode-setup'."
+  :package-version '(magit . "2.3.0")
+  :group 'magit-modes
+  :type 'hook
+  :options '(magit-maybe-save-repository-buffers
+             magit-maybe-show-margin))
+
 (defcustom magit-display-buffer-function 'magit-display-buffer-traditional
   "The function used display a Magit buffer.
 
@@ -497,8 +507,6 @@ Magit is documented in info node `(magit)'."
 (defvar-local magit-previous-section nil)
 (put 'magit-previous-section 'permanent-local t)
 
-(defvar magit-mode-setup-hook nil)
-
 (defun magit-mode-setup (mode &rest args)
   "Setup up a MODE buffer using ARGS to generate its content."
   (let ((buffer (magit-mode-get-buffer mode t))
@@ -506,10 +514,11 @@ Magit is documented in info node `(magit)'."
     (with-current-buffer buffer
       (setq magit-previous-section section)
       (setq magit-refresh-args args)
-      (run-hooks 'magit-mode-setup-hook)
       (funcall mode))
     (magit-display-buffer buffer)
-    (with-current-buffer buffer (magit-refresh-buffer))))
+    (with-current-buffer buffer
+      (run-hooks 'magit-mode-setup-hook)
+      (magit-refresh-buffer))))
 
 (defvar magit-display-buffer-noselect nil
   "If non-nil, then `magit-display-buffer' doesn't call `select-window'.")
@@ -697,13 +706,13 @@ all unmodified buffers that visit files being tracked in the
 current repository."
   (interactive)
   (unless inhibit-magit-refresh
-    (when (derived-mode-p 'magit-mode)
-      (run-hooks 'magit-pre-refresh-hook)
-      (magit-refresh-buffer)
-      (unless (derived-mode-p 'magit-status-mode)
-        (--when-let (magit-mode-get-buffer 'magit-status-mode)
-          (with-current-buffer it
-            (magit-refresh-buffer)))))
+    (run-hooks 'magit-pre-refresh-hook)
+    (unless (when (derived-mode-p 'magit-mode)
+              (magit-refresh-buffer)
+              (derived-mode-p 'magit-status-mode))
+      (--when-let (magit-mode-get-buffer 'magit-status-mode)
+        (with-current-buffer it
+          (magit-refresh-buffer))))
     (magit-revert-buffers)))
 
 (defun magit-refresh-all ()
@@ -902,6 +911,8 @@ Like `vc-mode-line' but simpler, more efficient, and less buggy."
 (add-hook 'pre-command-hook #'magit-pre-command-hook)
 
 (defun magit-maybe-save-repository-buffers ()
+  "Maybe save file-visiting buffers belonging to the current repository.
+Do so if `magit-save-repository-buffers' is non-nil."
   (when (and magit-save-repository-buffers
              (not disable-magit-save-buffers))
     (setq disable-magit-save-buffers t)
@@ -910,7 +921,6 @@ Like `vc-mode-line' but simpler, more efficient, and less buggy."
        (eq magit-save-repository-buffers 'dontask))
       (when msg (message "%s" msg)))))
 
-(add-hook 'magit-mode-setup-hook #'magit-maybe-save-repository-buffers)
 (add-hook 'magit-pre-refresh-hook #'magit-maybe-save-repository-buffers)
 (add-hook 'magit-pre-call-git-hook #'magit-maybe-save-repository-buffers)
 (add-hook 'magit-pre-start-git-hook #'magit-maybe-save-repository-buffers)

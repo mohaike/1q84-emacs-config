@@ -526,7 +526,6 @@ tracked in the current repository are reverted if
 
 (defun magit-process-sentinel (process event)
   "Default sentinel used by `magit-start-process'."
-  (let ((debug-on-error t)) ; temporary
   (when (memq (process-status process) '(exit signal))
     (setq event (substring event 0 -1))
     (when (string-match "^finished" event)
@@ -534,13 +533,15 @@ tracked in the current repository are reverted if
     (magit-process-finish process)
     (when (eq process magit-this-process)
       (setq magit-this-process nil))
-    (--when-let (and (not (process-get process 'inhibit-refresh))
-                     (process-get process 'command-buf))
-      (when (buffer-live-p it)
-        (with-current-buffer it
-          (let ((inhibit-magit-revert (process-get process 'inhibit-revert)))
-            (magit-refresh))))))))
-
+    (unless (process-get process 'inhibit-refresh)
+      (let ((inhibit-magit-revert (process-get process 'inhibit-revert))
+            (command-buf (process-get process 'command-buf)))
+        (if (buffer-live-p command-buf)
+            (with-current-buffer command-buf
+              (magit-refresh))
+          (with-temp-buffer
+            (setq default-directory (process-get process 'default-dir))
+            (magit-refresh)))))))
 
 (defun magit-sequencer-process-sentinel (process event)
   "Special sentinel used by `magit-run-git-sequencer'."
