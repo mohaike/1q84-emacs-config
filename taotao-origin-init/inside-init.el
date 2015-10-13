@@ -398,7 +398,8 @@ occurence of CHAR."
 
 (setq initial-frame-alist '((width . 160) (height . 70))) ;设置启动时窗口的长宽，下面为160*70
 
-(setq visible-bell t)                   ;关闭出错时的提示声
+;; (setq visible-bell t)                   ;关闭出错时的提示声
+ (setq ring-bell-function 'ignore)      ;彻底不要提示，OSX 10.11有恶心的Bug
 
 (setq track-eol t)                      ;当光标在行尾上下移动的时候，始终保持在行尾。
 
