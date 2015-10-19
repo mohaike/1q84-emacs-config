@@ -7,6 +7,8 @@
 
 ;; Author: Marius Vollmer <marius.vollmer@gmail.com>
 ;; Maintainer: Jonas Bernoulli <jonas@bernoul.li>
+;;	Kyle Meyer        <kyle@kyleam.com>
+;;	Noam Postavsky    <npostavs@users.sourceforge.net>
 ;; Former-Maintainers:
 ;;	Nicolas Dudebout  <nicolas.dudebout@gatech.edu>
 ;;	Peter J. Weisberg <pj@irregularexpressions.net>
@@ -65,6 +67,9 @@
 (declare-function eshell-parse-arguments 'eshell)
 (eval-when-compile (require 'message))
 (declare-function message-goto-body 'message)
+
+(defconst magit--minimal-git "1.9.4")
+(defconst magit--minimal-emacs "24.4")
 
 ;;; Options
 ;;;; Status Mode
@@ -386,7 +391,8 @@ then offer to initialize it as a new repository."
 
 ;;;###autoload
 (defun magit-status-internal (directory)
-  (let ((magit-mode-get-buffer--topdir directory))
+  (magit-tramp-asserts directory)
+  (let ((default-directory directory))
     (magit-mode-setup #'magit-status-mode)))
 
 (defun ido-enter-magit-status ()
@@ -544,8 +550,8 @@ remote in alphabetic order."
 
 (defvar magit-untracked-section-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "k"  'magit-discard)
-    (define-key map "s"  'magit-stage)
+    (define-key map [remap magit-delete-thing] 'magit-discard)
+    (define-key map "s" 'magit-stage)
     map)
   "Keymap for the `untracked' section.")
 
@@ -703,16 +709,16 @@ The old binding `b v' will be removed soon."
 
 (defvar magit-branch-section-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "\r" 'magit-visit-ref)
-    (define-key map "k"  'magit-branch-delete)
-    (define-key map "R"  'magit-branch-rename)
+    (define-key map [remap magit-visit-thing]  'magit-visit-ref)
+    (define-key map [remap magit-delete-thing] 'magit-branch-delete)
+    (define-key map "R" 'magit-branch-rename)
     map)
   "Keymap for `branch' sections.")
 
 (defvar magit-remote-section-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "k"  'magit-remote-remove)
-    (define-key map "R"  'magit-remote-rename)
+    (define-key map [remap magit-delete-thing] 'magit-remote-remove)
+    (define-key map "R" 'magit-remote-rename)
     map)
   "Keymap for `remote' sections.")
 
@@ -864,8 +870,8 @@ reference, but it is not checked out."
 
 (defvar magit-tag-section-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "\r" 'magit-visit-ref)
-    (define-key map "k"  'magit-tag-delete)
+    (define-key map [remap magit-visit-thing]  'magit-visit-ref)
+    (define-key map [remap magit-delete-thing] 'magit-tag-delete)
     map)
   "Keymap for `tag' sections.")
 
@@ -2528,8 +2534,8 @@ Git, and Emacs in the echo area."
     (if (stringp magit-version)
         (when (called-interactively-p 'any)
           (message "Magit %s, Git %s, Emacs %s"
-                   magit-version
-                   (ignore-errors (substring (magit-git-string "version") 12))
+                   (or magit-version "(unknown)")
+                   (or (magit-git-version) "(unknown)")
                    emacs-version))
       (setq debug (reverse debug))
       (setq magit-version 'error)
@@ -2538,16 +2544,21 @@ Git, and Emacs in the echo area."
       (message "Cannot determine Magit's version %S" debug))
     magit-version))
 
+(defun magit-git-version (&optional numeric)
+  (--when-let (let (magit-git-global-arguments)
+                (ignore-errors (substring (magit-git-string "version") 12)))
+    (if numeric
+        (and (string-match "^\\([0-9]+\\.[0-9]+\\.[0-9]+\\)" it)
+             (match-string 1 it))
+      it)))
+
 (defun magit-startup-asserts ()
-  (let* ((magit-git-global-arguments nil)
-         (version (ignore-errors (substring (magit-git-string "version") 12))))
-    (when version
-      (when (string-match "^\\([0-9]+\\.[0-9]+\\.[0-9]+\\)" version)
-        (setq version (match-string 1 version)))
-      (when (and (not (equal (getenv "TRAVIS") "true"))
-                 (version< version "1.9.4"))
-        (display-warning 'magit (format "\
-Magit requires Git >= 1.9.4, you are using %s.
+  (let ((version (magit-git-version t)))
+    (when (and version
+               (version< version magit--minimal-git)
+               (not (equal (getenv "TRAVIS") "true")))
+      (display-warning 'magit (format "\
+Magit requires Git >= %s, you are using %s.
 
 If this comes as a surprise to you, because you do actually have
 a newer version installed, then that probably means that the
@@ -2560,10 +2571,10 @@ For X11 something like ~/.xinitrc should work.
 
 If you use Tramp to work inside remote Git repositories, then you
 have to make sure a suitable Git is used on the remote machines
-too.\n" version) :error))))
-  (when (version< emacs-version "24.4")
+too.\n" magit--minimal-git version) :error)))
+  (when (version< emacs-version magit--minimal-emacs)
     (display-warning 'magit (format "\
-Magit requires Emacs >= 24.4, you are using %s.
+Magit requires Emacs >= %s, you are using %s.
 
 If this comes as a surprise to you, because you do actually have
 a newer version installed, then that probably means that the
@@ -2572,7 +2583,9 @@ always start Emacs from a shell, then that can be fixed in the
 shell's init file.  If you start Emacs by clicking on an icon,
 or using some sort of application launcher, then you probably
 have to adjust the environment as seen by graphical interface.
-For X11 something like ~/.xinitrc should work.\n" emacs-version) :error))
+For X11 something like ~/.xinitrc should work.\n"
+                                    magit--minimal-emacs emacs-version)
+                     :error))
   (--each '((magit-log-edit  . git-commit)
             (git-commit-mode . git-commit)
             (git-rebase-mode . git-rebase))
@@ -2584,6 +2597,41 @@ which was used in earlier releases.  Please remove it, so that
 Magit can use the successor `%s' without the obsolete
 library getting in the way.  Then restart Emacs.\n"
                                       (car it)  (car it) (cdr it)) :error))))
+
+(defvar magit--remotes-using-recent-git nil)
+
+(defun magit-tramp-asserts (directory)
+  (-when-let (remote (file-remote-p directory))
+    (unless (member remote magit--remotes-using-recent-git)
+      (-if-let (version (let ((default-directory directory))
+                          (magit-git-version t)))
+          (if (version<= magit--minimal-git version)
+              (push version magit--remotes-using-recent-git)
+            (display-warning 'magit (format "\
+Magit requires Git >= %s, but on %s the version is %s.
+
+If multiple Git versions are installed on the host then the
+problem might be that TRAMP uses the wrong executable.
+
+First check the value of `magit-git-executable'.  Its value is
+used when running git locally as well as when running it on a
+remote host.  The default value is \"git\", except on Windows
+where an absolute path is used for performance reasons.
+
+If the value already is just \"git\" but TRAMP never-the-less
+doesn't use the correct executable, then consult the info node
+`(tramp)Remote programs'.\n" magit--minimal-git remote version) :error))
+        (display-warning 'magit (format "\
+Magit cannot find Git on %s.
+
+First check the value of `magit-git-executable'.  Its value is
+used when running git locally as well as when running it on a
+remote host.  The default value is \"git\", except on Windows
+where an absolute path is used for performance reasons.
+
+If the value already is just \"git\" but TRAMP never-the-less
+doesn't find the executable, then consult the info node
+`(tramp)Remote programs'.\n" remote) :error)))))
 
 (provide 'magit)
 

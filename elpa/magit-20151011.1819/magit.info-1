@@ -901,10 +901,14 @@ File: magit.info,  Node: Automatic refresh and revert,  Next: Sections,  Prev: A
 
 After running a command which may change the state of the current
 repository, the current Magit buffer and the corresponding status buffer
-are refreshed.  This ensures that the displayed information is
-up-to-date but can lead to a noticeable delay in big repositories.
-Other Magit buffers are not refreshed to keep the delay to a minimum and
-also because doing so can sometimes be undesirable.
+are refreshed.  Status buffer may optionally be automatically refreshed
+whenever a buffer is saved to a file inside the respective repository.
+
+   Automatically refreshing Magit buffers ensures that the displayed
+information is up-to-date most of the time but can lead to a noticeable
+delay in big repositories.  Other Magit buffers are not refreshed to
+keep the delay to a minimum and also because doing so can sometimes be
+undesirable.
 
  -- User Option: magit-revert-buffers
 
@@ -972,6 +976,17 @@ to the repository outside of Magit.
 
      The file-visiting buffers are always reverted, even if
      ‘magit-revert-buffers’ is nil.
+
+ -- Function: magit-after-save-refresh-status
+
+     This function is intended to be added to ‘after-save-hook’.  After
+     doing that the corresponding status buffer is refreshed whenever a
+     buffer is saved to a file inside a repository.
+
+     Note that refreshing a Magit buffer is done by re-creating its
+     contents from scratch, which can be slow in large repositories.  If
+     you are not satisfied with Magit’s performance, then you should
+     obviously not add this function to that hook.
 
  -- User Option: magit-refresh-buffer-hook
 
@@ -6327,9 +6342,9 @@ Appendix B Keystroke Index
 * f o:                                   Fetching.            (line  19)
 * F o:                                   Pulling.             (line  17)
 * g:                                     Automatic refresh and revert.
-                                                              (line  62)
+                                                              (line  66)
 * G:                                     Automatic refresh and revert.
-                                                              (line  71)
+                                                              (line  75)
 * j:                                     Diff buffer.         (line  38)
 * k:                                     Viewing Git output.  (line  19)
 * k <1>:                                 Applying.            (line  37)
@@ -6799,9 +6814,9 @@ Appendix C Command Index
 * magit-reflog-head:                     Reflog.              (line  19)
 * magit-reflog-other:                    Reflog.              (line  15)
 * magit-refresh:                         Automatic refresh and revert.
-                                                              (line  62)
+                                                              (line  66)
 * magit-refresh-all:                     Automatic refresh and revert.
-                                                              (line  71)
+                                                              (line  75)
 * magit-remote-add:                      Remotes.             (line  13)
 * magit-remote-popup:                    Remotes.             (line   8)
 * magit-remote-remove:                   Remotes.             (line  28)
@@ -6957,6 +6972,8 @@ Appendix D Function Index
                                                               (line 201)
 * ido-enter-magit-status:                Status buffer.       (line  42)
 * magit-add-section-hook:                Section hooks.       (line  18)
+* magit-after-save-refresh-status:       Automatic refresh and revert.
+                                                              (line  84)
 * magit-builtin-completing-read:         Completion and confirmation.
                                                               (line  23)
 * magit-call-git:                        Calling Git for effect.
@@ -7089,243 +7106,3 @@ Appendix D Function Index
 * with-editor-usage-message:             Editing commit messages.
                                                               (line 215)
 
-
-File: magit.info,  Node: Variable Index,  Prev: Function Index,  Up: Top
-
-Appendix E Variable Index
-*************************
-
- [index ]
-* Menu:
-
-* git-commit-fill-column:                Editing commit messages.
-                                                              (line 228)
-* git-commit-finish-query-functions:     Editing commit messages.
-                                                              (line 233)
-* git-commit-known-pseudo-headers:       Editing commit messages.
-                                                              (line 124)
-* git-commit-major-mode:                 Editing commit messages.
-                                                              (line 163)
-* git-commit-setup-hook:                 Editing commit messages.
-                                                              (line 174)
-* git-commit-summary-max-length:         Editing commit messages.
-                                                              (line 222)
-* git-rebase-auto-advance:               Editing rebase sequences.
-                                                              (line  94)
-* git-rebase-confirm-cancel:             Editing rebase sequences.
-                                                              (line 102)
-* git-rebase-show-instructions:          Editing rebase sequences.
-                                                              (line  98)
-* global-magit-file-mode:                Minor mode for buffers visiting files.
-                                                              (line  11)
-* magit-after-revert-hook:               Automatic refresh and revert.
-                                                              (line  86)
-* magit-blame-goto-chunk-hook:           Blaming.             (line  97)
-* magit-blame-heading-format:            Blaming.             (line  83)
-* magit-blame-show-headings:             Blaming.             (line  91)
-* magit-blame-time-format:               Blaming.             (line  87)
-* magit-branch-read-upstream-first:      Branching.           (line  90)
-* magit-buffer-name-format:              Naming Buffers.      (line  26)
-* magit-bury-buffer-function:            Quitting Windows.    (line  11)
-* magit-commit-ask-to-stage:             Initiating a commit. (line  74)
-* magit-commit-extend-override-date:     Initiating a commit. (line  79)
-* magit-commit-reword-override-date:     Initiating a commit. (line  83)
-* magit-commit-squash-confirm:           Initiating a commit. (line  87)
-* magit-completing-read-function:        Completion and confirmation.
-                                                              (line  10)
-* magit-diff-auto-show:                  Diff options.        (line   6)
-* magit-diff-auto-show-delay:            Diff options.        (line  29)
-* magit-diff-highlight-indentation:      Diff options.        (line  64)
-* magit-diff-highlight-trailing:         Diff options.        (line  59)
-* magit-diff-paint-whitespace:           Diff options.        (line  51)
-* magit-diff-refine-hunk:                Diff options.        (line  41)
-* magit-display-buffer-function:         Switching Buffers.   (line  23)
-* magit-display-buffer-noselect:         Switching Buffers.   (line  14)
-* magit-ediff-dwim-show-on-hunks:        Ediffing.            (line  66)
-* magit-ediff-quit-hook:                 Ediffing.            (line  74)
-* magit-generate-buffer-name-function:   Naming Buffers.      (line   6)
-* magit-git-debug:                       Viewing Git output.  (line  23)
-* magit-git-debug <1>:                   Getting a value from Git.
-                                                              (line  64)
-* magit-git-executable:                  Git executable.      (line  36)
-* magit-git-global-arguments:            Global Git arguments.
-                                                              (line   6)
-* magit-log-auto-more:                   Log Buffer.          (line  61)
-* magit-log-section-args:                Status options.      (line  10)
-* magit-log-section-commit-count:        Status sections.     (line  96)
-* magit-log-show-margin:                 Log Buffer.          (line  67)
-* magit-log-show-refname-after-summary:  Log Buffer.          (line  79)
-* magit-no-confirm:                      Completion and confirmation.
-                                                              (line  42)
-* magit-not-reverted-hook:               Automatic refresh and revert.
-                                                              (line  96)
-* magit-pop-revision-stack-format:       Editing commit messages.
-                                                              (line  92)
-* magit-post-display-buffer-hook:        Switching Buffers.   (line  61)
-* magit-pre-display-buffer-hook:         Switching Buffers.   (line  50)
-* magit-process-raise-error:             Calling Git for effect.
-                                                              (line 151)
-* magit-push-always-verify:              Pushing.             (line  61)
-* magit-refresh-args:                    Refreshing buffers.  (line  54)
-* magit-refresh-buffer-hook:             Automatic refresh and revert.
-                                                              (line  80)
-* magit-refresh-function:                Refreshing buffers.  (line  48)
-* magit-refs-indent-cherry-lines:        References buffer.   (line  88)
-* magit-refs-local-branch-format:        References buffer.   (line  76)
-* magit-refs-remote-branch-format:       References buffer.   (line  80)
-* magit-refs-sections-hook:              References sections. (line  13)
-* magit-refs-show-commit-count:          References buffer.   (line  29)
-* magit-refs-show-margin:                References buffer.   (line  40)
-* magit-refs-tags-format:                References buffer.   (line  84)
-* magit-repository-directories:          Status buffer.       (line  30)
-* magit-repository-directories-depth:    Status buffer.       (line  36)
-* magit-revert-buffers:                  Automatic refresh and revert.
-                                                              (line  13)
-* magit-revision-insert-related-refs:    Revision buffer.     (line   6)
-* magit-revision-show-gravatar:          Revision buffer.     (line  10)
-* magit-root-section:                    Matching sections.   (line  74)
-* magit-save-repository-buffers:         Automatic save.      (line  13)
-* magit-section-movement-hook:           Section movement.    (line  39)
-* magit-section-set-visibility-hook:     Section visibility.  (line  80)
-* magit-section-show-child-count:        Section options.     (line   9)
-* magit-status-headers-hook:             Status header sections.
-                                                              (line  17)
-* magit-status-refresh-hook:             Status options.      (line   6)
-* magit-status-sections-hook:            Status sections.     (line  10)
-* magit-this-process:                    Calling Git for effect.
-                                                              (line 146)
-* magit-uniquify-buffer-names:           Naming Buffers.      (line  51)
-* magit-visit-ref-create:                References buffer.   (line 115)
-* magit-wip-after-apply-mode:            Wip modes.           (line  99)
-* magit-wip-after-apply-mode-lighter:    Wip modes.           (line 141)
-* magit-wip-after-save-local-mode-lighter: Wip modes.         (line 137)
-* magit-wip-after-save-mode:             Wip modes.           (line  93)
-* magit-wip-before-change-mode:          Wip modes.           (line 113)
-* magit-wip-before-change-mode-lighter:  Wip modes.           (line 145)
-* magit-wip-namespace:                   Wip modes.           (line 149)
-
-
-
-Tag Table:
-Node: Top1217
-Node: Introduction5509
-Node: Installation10202
-Node: Updating from an older release10577
-Node: Installing from an Elpa archive12172
-Node: Installing from the Git repository13751
-Node: Post-installation tasks15995
-Node: Getting started17521
-Node: Interface concepts23256
-Node: Modes and Buffers23582
-Node: Switching Buffers25197
-Node: Naming Buffers28194
-Node: Quitting Windows30902
-Node: Automatic save32488
-Node: Automatic refresh and revert33553
-Node: Sections37518
-Node: Section movement38467
-Node: Section visibility41022
-Node: Section hooks44613
-Node: Section types and values46651
-Node: Section options47921
-Node: Popup buffers and prefix commands48393
-Node: Completion and confirmation49707
-Node: Running Git52613
-Node: Viewing Git output52849
-Node: Running Git manually53849
-Node: Git executable55975
-Node: Global Git arguments57982
-Node: Inspecting58789
-Node: Status buffer59916
-Node: Status sections62460
-Node: Status header sections66803
-Node: Status options68633
-Node: Logging69357
-Node: Refreshing logs71724
-Node: Log Buffer73109
-Node: Select from log76198
-Node: Reflog77138
-Node: Diffing77616
-Node: Refreshing diffs80612
-Node: Diff buffer83592
-Node: Diff options85494
-Node: Revision buffer88377
-Node: Ediffing89332
-Node: References buffer92381
-Node: References sections97091
-Node: Bisecting97966
-Node: Visiting blobs99462
-Node: Blaming99971
-Node: Manipulating103291
-Node: Repository setup103583
-Node: Staging and unstaging104346
-Node: Staging from file-visiting buffers106695
-Node: Applying107863
-Node: Committing109506
-Node: Initiating a commit110089
-Node: Editing commit messages113401
-Node: Branching123796
-Node: Merging127488
-Node: Rebasing129572
-Node: Editing rebase sequences132559
-Node: Rebase sequence log135593
-Node: Cherry picking142337
-Node: Reverting143943
-Node: Resetting145306
-Node: Stashing146816
-Node: Transferring149961
-Node: Remotes150199
-Node: Fetching151002
-Node: Pulling151818
-Node: Pushing152318
-Node: Creating and sending patches155296
-Node: Applying patches155991
-Node: Miscellaneous156989
-Node: Tagging157280
-Node: Notes158065
-Node: Submodules160590
-Node: Common commands161910
-Node: Wip modes163658
-Node: Minor mode for buffers visiting files170394
-Node: Minor mode for buffers visiting blobs172537
-Node: Customizing173342
-Node: Per-repository configuration175014
-Node: Essential settings176662
-Node: Safety176986
-Node: Performance180167
-Node: Plumbing186045
-Node: Calling Git186673
-Node: Getting a value from Git188196
-Node: Calling Git for effect191300
-Node: Section plumbing197804
-Node: Creating sections198032
-Node: Section selection201835
-Node: Matching sections203515
-Node: Refreshing buffers208717
-Node: Conventions211852
-Node: Confirmation and completion212029
-Node: Theming Faces212927
-Node: FAQ221078
-Node: Magit is slow222087
-Node: I am having problems committing222253
-Node: I am using an Emacs release older than 244222651
-Node: I am using a Git release older than 194224097
-Node: I am using MS Windows and cannot push with Magit224936
-Node: How to install the gitman info manual?225514
-Node: How can I show Git's output?228096
-Node: Expanding a file to show the diff causes it to disappear228906
-Node: Magit claims repository accessed using Tramp does not exist229446
-Node: Can Magit be used as ediff-version-control-package?230592
-Node: How to show diffs for gpg-encrypted files?232632
-Node: Emacs 245 hangs when loading Magit233223
-Node: Keystroke Index233742
-Node: Command Index261152
-Node: Function Index289226
-Node: Variable Index299708
-
-End Tag Table
-
-
-Local Variables:
-coding: utf-8
-End:
