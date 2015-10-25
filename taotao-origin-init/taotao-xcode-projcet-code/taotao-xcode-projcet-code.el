@@ -8,27 +8,27 @@
   (re-search-forward "PROVISIONING_PROFILE")
   (forward-char 3)
   (delete-line)
-  (insert-before-markers "\"f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb\";")  ;; 签名
+  (insert-before-markers "\"4b860736-43e0-4bbe-a2de-da186188b59d\";")  ;; 签名
 
   (re-search-forward "PROVISIONING_PROFILE")
   (forward-char 3)
   (delete-line)
-  (insert-before-markers "\"f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb\";")  ;; 签名
+  (insert-before-markers "\"4b860736-43e0-4bbe-a2de-da186188b59d\";")  ;; 签名
 
   (re-search-forward "PROVISIONING_PROFILE")
   (forward-char 3)
   (delete-line)
-  (insert-before-markers "\"f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb\";")  ;; 签名
+  (insert-before-markers "\"4b860736-43e0-4bbe-a2de-da186188b59d\";")  ;; 签名
 
-  (re-search-forward "PROVISIONING_PROFILE")
-  (forward-char 3)
-  (delete-line)
-  (insert-before-markers "\"f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb\";")  ;; 签名
+  ;; (re-search-forward "PROVISIONING_PROFILE")
+  ;; (forward-char 3)
+  ;; (delete-line)
+  ;; (insert-before-markers "\"4b860736-43e0-4bbe-a2de-da186188b59d\";")  ;; 签名
 
-  (re-search-forward "PROVISIONING_PROFILE")
-  (forward-char 3)
-  (delete-line)
-  (insert-before-markers "\"f0708d0a-d69f-4c9f-8104-d61c3ee8b5eb\";")  ;; 签名
+  ;; (re-search-forward "PROVISIONING_PROFILE")
+  ;; (forward-char 3)
+  ;; (delete-line)
+  ;; (insert-before-markers "\"4b860736-43e0-4bbe-a2de-da186188b59d\";")  ;; 签名
 
 
   (save-buffer)
