@@ -59,7 +59,7 @@
 
 (require 'taotao-grep-mode)
 
-(require 'taotao-ag-highlight-mode)
+(require 'taotao-ag-mode)
 
 (require 'taotao-obj-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
