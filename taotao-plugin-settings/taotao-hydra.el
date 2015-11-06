@@ -151,10 +151,12 @@
   ("tm" taotao-msm-profile)
 
   ("a" ag-files)             ;非win平台，这个是需要安装ag，还要继续安装emacs对应的ag.el
-  ;; ("xa" ag-kill-buffers)     ;同上
-  ;; ("xoa" ag-kill-other-buffers)          ;同上
+  ("xa" taotao-ag-kill-buffers)         ;同上
+  ("xoa" taotao-ag-kill-other-buffers)  ;同上
 
-  ("mf" toggle-frame-maximized)          ;最大化窗口
+  ("xg" ggtags-kill-buffers)            ;干掉关掉很麻烦的ggtags-navigation-mode
+
+  ("mf" toggle-frame-maximized)         ;最大化窗口
 
   ("," previous-multiframe-window)
   ("." next-multiframe-window)
