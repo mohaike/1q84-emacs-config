@@ -1,5 +1,8 @@
 (fset 'hct-git-store-file
-   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("\344" 0 "%d")) arg)))
+   [?\C-k ?\C-  ?\C-s ?: return ?\M-f ?\M-b backspace ?\C-e ? ])
+
+;; (fset 'hct-git-store-file
+;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("\344" 0 "%d")) arg)))
 
 (fset 'hct-window-undo
    [?\C-\( ?\C-\( ?\C-\( ?\C-\( ?\C-\( ?\C-\( ?\C-\( ?\C-\(])

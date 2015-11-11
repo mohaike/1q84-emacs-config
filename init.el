@@ -55,13 +55,16 @@
 
 (require 'taotao-gls)                   ;这个是修复一个emacs的Bug
 
-(require 'taotao-js-mode)                    ;js-mode
+(require 'taotao-js-mode)               ;js-mode
 
 (require 'taotao-grep-mode)
 
 (require 'taotao-ag-mode)
 
 (require 'taotao-obj-mode)
+
+(require 'taotao-abbrev-mode)           ;这个是管理简写的自定义模式
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 测试的时候用的
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
