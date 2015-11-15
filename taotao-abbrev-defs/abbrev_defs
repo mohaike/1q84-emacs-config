@@ -1,7 +1,7 @@
 (define-abbrev-table 'global-abbrev-table '(
 
 ("sp" "cd /Users/1q84/Documents/Project/SM" nil)
-("hcm" "\.cpp$|\.h$|\.mm$|\.m$" nil)
+("hcm" "\.c$|\.cpp$|\.h$|\.mm$|\.m$" nil)
 ("hctg" "hct-git-store-file" nil)
 
 ))
