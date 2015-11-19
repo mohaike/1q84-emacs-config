@@ -121,7 +121,7 @@
 
   ("z" taotao-mark-line)
 
-  ("tg" keyboard-quit)
+  ;; ("tg" keyboard-quit)
 
   ("tl" hl-line-mode)
 
@@ -152,10 +152,11 @@
 
   ("tm" taotao-msm-profile)
 
-  ("a" ag-files)             ;非win平台，这个是需要安装ag，还要继续安装emacs对应的ag.el
+  ("a" ag-files)                        ;非win平台，这个是需要安装ag，还要继续安装emacs对应的ag.el
   ("xa" taotao-ag-kill-buffers)         ;同上
   ("xoa" taotao-ag-kill-other-buffers)  ;同上
 
+  ("tg" taotao-gtags-update)            ;运行脚本~/.emacs.d/taotao-origin-init/taotao-update-gtags/taotao-gtags-command
   ("xg" ggtags-kill-buffers)            ;干掉关掉很麻烦的ggtags-navigation-mode
 
   ("mf" toggle-frame-maximized)         ;最大化窗口

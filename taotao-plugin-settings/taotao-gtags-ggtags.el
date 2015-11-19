@@ -10,7 +10,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ggtags
+;; ggtags key-bind
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "<f9>") 'ggtags-mode)
 
@@ -46,5 +46,39 @@
   (define-key ggtags-global-mode-map (kbd "x") '(lambda ()
                                                   (interactive)
                                                   (taotao-ggtags-navigation-mode-abort))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 更新ggtags
+;; 以下的宏【taotao-run-eshell-command-gtags】是可以直接当成函数运行的，默认的宏是不能当成函数运行的
+;; (shell "10086")                         ;创建或者有的话切换到一个名为10086的shell，shell支持只有字符串
+;; 运行脚本【~/.emacs.d/taotao-origin-init/taotao-update-gtags/taotao-gtags-command.sh】
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun taotao-gtags-update ()
+  "Run gtags in eshell"
+  (interactive)
+
+  (setq current-buffer-name (buffer-name))
+  (eshell 65535)                        ;创建或者有的话切换到一个名为*eshell*<65535>的eshell，eshell的参数只能是数字
+  (end-of-buffer)
+  (taotao-run-eshell-command-gtags)     ;输入需要运行的指令，并运行
+  (switch-to-buffer current-buffer-name)
+  (message "Execute taotao-gtags-update end"))  
+
+(fset 'taotao-run-eshell-command-gtags
+      (lambda (&optional arg)
+        "Keyboard macro. run eshell command"
+        (interactive "p")
+        (kmacro-exec-ring-item
+         (quote
+          ([?.
+            ? 
+            ?~ ?/ ?. ?e ?m ?a ?c ?s ?. ?d ?/
+            ?t ?a ?o ?t ?a ?o ?- ?o ?r ?i ?g ?i ?n ?- ?i ?n ?i ?t ?/
+            ?t ?a ?o ?t ?a ?o ?- ?u ?p ?d ?a ?t ?e ?- ?g ?t ?a ?g ?s ?/
+            ?t ?a ?o ?t ?a ?o ?- ?g ?t ?a ?g ?s ?- ?c ?o ?m ?m ?a ?n ?d ?. ?s ?h
+            return]
+           0 "%d"))
+         arg)))
 
 (provide 'taotao-gtags-ggtags)
