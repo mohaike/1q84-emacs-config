@@ -933,11 +933,32 @@ See also `toggle-frame-fullscreen'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; window分割策略
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun taotao-window ()
-  (interactive)
-  (delete-other-windows)
+(defun taotao-window (&optional arg window)
+  (interactive "P")
   (setq current-buffer-name (buffer-name)) ;先保存当前buffer的名字
-  (shell)
+  ;; 先看下shell是否存在
+  (if (get-buffer "*shell*")
+      (progn
+        (switch-to-buffer-other-window "*shell*") ;存在的话，先切过去
+        (shell))
+    (progn                              ;不存在的话在下方生成一个
+      (split-window-below)
+      (windmove-down)
+      (shell)))
+  
+  ;; 现在记录下shell上面的window的名字
+  (setq shell-up-window "*scratch*")    ;默认的为【*scratch*】
+  (let ((other-window (windmove-find-other-window 'up arg window)))
+    (cond ((null other-window)
+             (setq shell-up-window "*scratch*"))
+          ((and (window-minibuffer-p other-window)
+                (not (minibuffer-window-active-p other-window)))
+           (error "Minibuffer is inactive"))
+          (t
+           (select-window other-window)
+           (setq shell-up-window (buffer-name)))))
+
+  (delete-other-windows)
 
   (taotao-toggle-frame-maximized)
   (split-window-right)
@@ -949,7 +970,7 @@ See also `toggle-frame-fullscreen'."
   (delete-window)
   (previous-multiframe-window)
   (split-window-below)
-  (switch-to-buffer "*scratch*")
+  (switch-to-buffer shell-up-window)    ;切到上面设定的shell上面的window
   (next-multiframe-window)
   (switch-to-buffer "*shell*")
   (previous-multiframe-window)
