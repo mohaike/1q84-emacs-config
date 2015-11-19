@@ -97,7 +97,7 @@
 
   ("1" taotao-window)
   ("2" taotao-stick-man-window)
-  ("3" taotao-gs-window)
+  ;; ("3" taotao-gs-window)
   ("`" mark-sexp)
   ("v" set-mark-command)
   ("e" xah-open-in-external-app)
@@ -133,6 +133,8 @@
   ("wm" whitespace-mode)
 
   ("ts" taotao-screenshot)
+
+  ("3" loop-alpha)                     ;设置屏幕透明，装逼利器
 
   ("q" nil "quit")))
 
