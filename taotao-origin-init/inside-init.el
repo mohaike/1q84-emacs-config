@@ -1003,11 +1003,6 @@ See also `toggle-frame-fullscreen'."
 (defun taotao-gs-window ()
   (interactive)
   (dired "~/Documents/Project/GS/mysingingmonsters_client")
-  (shell)
-  (dired "~/Documents/Project/GS/mysingingmonsters_client/")
-  (kill-buffer)
-  (switch-to-buffer "*scratch*")
-
   (taotao-window)
   (dired "~/Documents/Project/GS/mysingingmonsters_client/MSMYodo2")
   )
@@ -1019,11 +1014,6 @@ See also `toggle-frame-fullscreen'."
 (defun taotao-stick-man-window ()
   (interactive)
   (dired "~/Documents/Project/SM")
-  (shell)
-  (dired "~/Documents/Project/SM")
-  (kill-buffer)
-  (switch-to-buffer "*scratch*")
-
   (taotao-window)
   (dired "~/Documents/Project/SM/StickMan/Classes/")
   )
