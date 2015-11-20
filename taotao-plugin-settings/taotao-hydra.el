@@ -172,6 +172,8 @@
   ("cc" taotao-copy-current-word)
   ("cl" taotao-copy-end-of-line)
 
+  ;; ("0" taotao-copy-current-line-and-open) ;0是测试键
+
   ("q" nil "quit")))
 
 (provide 'taotao-hydra)
