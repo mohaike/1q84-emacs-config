@@ -946,6 +946,7 @@ See also `toggle-frame-fullscreen'."
 (defun taotao-window (&optional arg window)
   (interactive "P")
 
+  (setq pos (point))
   (setq current-buffer-name (buffer-name))
   (setq shell-buffer-name "*shell*")
   (setq scratch-buffer-name "*scratch*")
@@ -996,7 +997,9 @@ See also `toggle-frame-fullscreen'."
   (previous-multiframe-window)
   (previous-multiframe-window)
 
-  (switch-to-buffer current-buffer-name)) ;最后切回最开始的Buffer
+  (switch-to-buffer current-buffer-name) ;最后切回最开始的Buffer
+  (goto-char pos)                        ;并且光标移动到那个window所在的位置
+  )
 
 
 (defun taotao-gs-window ()
