@@ -163,8 +163,8 @@
 
   ("," previous-multiframe-window)
   ("." next-multiframe-window)
-  ("0" winner-redo)
-  ("9" winner-undo)
+  ("=" winner-redo)
+  ("-" winner-undo)
   ("dw" delete-window)
 
   (")" copy-word-forward)
@@ -172,7 +172,13 @@
   ("cc" taotao-copy-current-word)
   ("cl" taotao-copy-end-of-line)
 
-  ;; ("0" taotao-copy-current-line-and-open) ;0是测试键
+  ("sc" stickman-ui-change)
+  ("sr" stickman-reflash-flafile)
+  ("skt" stickman-clear-ui-tmp)         ;清除火柴人Flash文件下ui下的tmp文件夹，以及命名为tmp的文件
+
+  ("tu" taotao-uppercase-current-letter) ;0是测试键
+
+  ;; ("0" taotao-uppercase-current-letter) ;0是测试键
 
   ("q" nil "quit")))
 

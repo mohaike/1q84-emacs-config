@@ -1186,4 +1186,12 @@ This command assumes point is not in a string or comment."
   (face-remap-add-relative
    'mode-line '((:foreground "ivory" :background "DarkOrange2") mode-line)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 将当前光标的字母变成大写
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun taotao-uppercase-current-letter ()
+  (interactive)
+  (capitalize-region (point) (1+ (point))))
+
+
 (provide 'inside-init)
