@@ -2,6 +2,7 @@
 
 ("sp" "cd /Users/1q84/Documents/Project/SM" nil)
 ("hcm" "\.c$|\.cpp$|\.h$|\.mm$|\.m$" nil)
-("hctg" "hct-git-store-file" nil)
+("tg" "hct-git-store-file" nil)
+("tm" "【】" nil)
 
 ))

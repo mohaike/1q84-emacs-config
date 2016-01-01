@@ -150,7 +150,7 @@
   ("ts" taotao-stick-man-profile)
   ("tcs" taotao-stick-man-clear-profile)
 
-  ("tm" taotao-msm-profile)
+  ("oldtm" taotao-msm-profile)             ;怪兽
 
   ("a" ag-files)                        ;非win平台，这个是需要安装ag，还要继续安装emacs对应的ag.el
   ("xa" taotao-ag-kill-buffers)         ;同上
@@ -176,7 +176,10 @@
   ("sr" stickman-reflash-flafile)
   ("skt" stickman-clear-ui-tmp)         ;清除火柴人Flash文件下ui下的tmp文件夹，以及命名为tmp的文件
 
-  ("tu" taotao-uppercase-current-letter) ;0是测试键
+  ("tu" taotao-uppercase-current-letter)
+
+  ("tf" taotao-formula)
+  ("tm" taotao-zh-parentheses)
 
   ;; ("0" taotao-uppercase-current-letter) ;0是测试键
 

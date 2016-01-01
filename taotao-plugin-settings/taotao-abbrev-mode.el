@@ -23,7 +23,7 @@
 ;; 
 
 (setq abbrev-file-name             ;; tell emacs where to read abbrev
-      "/Users/1q84/.emacs.d/taotao-abbrev-defs/abbrev_defs")    ;; definitions from...
+      "~/.emacs.d/taotao-abbrev-defs/abbrev_defs")    ;; definitions from...
 
 (define-key minibuffer-local-map (kbd "`") 'expand-abbrev)
 

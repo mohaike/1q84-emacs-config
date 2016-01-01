@@ -21,4 +21,24 @@
 
 (global-set-key (kbd "s-e") 'taotao-copy-current-line-and-open)
 
+(fset 'taotao-formula
+      (lambda (&optional arg)
+        "Keyboard macro. run eshell command"
+        (interactive "p")
+        (kmacro-exec-ring-item
+         (quote
+          ([?\\ ?\( ?\\ ?\) ?\C-b ?\C-b]
+           0 "%d"))
+         arg)))
+
+(fset 'taotao-zh-parentheses
+      (lambda (&optional arg)
+        "Keyboard macro. run eshell command"
+        (interactive "p")
+        (kmacro-exec-ring-item
+         (quote
+          ([?\【 ?\】 ?\C-b]
+           0 "%d"))
+         arg)))
+
 (provide 'taotao-text-mode)
