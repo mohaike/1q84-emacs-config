@@ -181,6 +181,10 @@
   ("tf" taotao-formula)
   ("tm" taotao-zh-parentheses)
 
+  ("gp" xah-copy-file-path)             ;get path
+  ("gn" taotao-copy-buffer-name-to-clipboard) ;get name
+  ("co" clone-and-open-file)
+
   ;; ("0" taotao-uppercase-current-letter) ;0是测试键
 
   ("q" nil "quit")))
