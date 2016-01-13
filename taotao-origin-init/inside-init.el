@@ -93,23 +93,20 @@
   (message "String copied: 「%s」"
            (buffer-substring-no-properties (point) (line-end-position))))
 
+(defun taotao-dwim-at-point ()
+  "If there's an active selection, return that.
+Otherwise, get the symbol at point, as a string."
+  (cond ((use-region-p)
+         (buffer-substring-no-properties (region-beginning) (region-end)))
+        ((symbol-at-point)
+         (substring-no-properties
+          (symbol-name (symbol-at-point))))))
+
 (defun taotao-copy-current-word ()      ;这个函数会拷贝全部黏在一起的字符串
   (interactive)
-  (let ( ξp1 ξp2 ξsstr )
-    (if (use-region-p)
-        (progn
-          (setq ξp1 (region-beginning))
-          (setq ξp2 (region-end)))
-      (save-excursion
-        (skip-chars-backward "-_A-Za-z0-9")
-        (setq ξp1 (point))
-        (right-char)
-        (skip-chars-forward "-_A-Za-z0-9")
-        (setq ξp2 (point))))
-    (setq ξsstr (buffer-substring-no-properties ξp1 ξp2))
+  (let ( ξsstr )
+    (setq ξsstr (taotao-dwim-at-point))
     (setq mark-active nil)
-    ;; (when (< ξp1 (point))
-    ;;   (goto-char ξp1))                  ;这个是用来移动到那个单词的前面，不过拷贝的话是不需要用到这个的
     (kill-new ξsstr)
     (message "Current word copied: 「%s」" ξsstr)))
 
