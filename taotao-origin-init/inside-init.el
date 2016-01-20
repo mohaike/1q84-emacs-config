@@ -427,7 +427,7 @@ occurence of CHAR."
 (global-set-key (kbd "C-)") 'winner-redo) ;窗口的前进
 
 (global-set-key (kbd "C-c z") 'shell)   ;shell
-(global-set-key (kbd "<f10>") 'rename-buffer) ;命名Buffer，多在开多个shell的时候使用
+;; (global-set-key (kbd "<f10>") 'rename-buffer) ;命名Buffer，多在开多个shell的时候使用
 
 (global-set-key (kbd "s--") 'scroll-down-line) ;模拟鼠标滚轮向上滚动
 (global-set-key (kbd "s-=") 'scroll-up-line)   ;模拟鼠标滚轮向下滚动
