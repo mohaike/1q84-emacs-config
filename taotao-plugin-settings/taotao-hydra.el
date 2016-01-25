@@ -69,6 +69,7 @@
   ("p" outline-previous-visible-heading)
   ("f" org-forward-heading-same-level)
   ("b" org-backward-heading-same-level)
+  ("td" org-todo)
 
 
    ("q" nil)
