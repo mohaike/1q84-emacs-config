@@ -421,7 +421,8 @@ occurence of CHAR."
 
 (global-set-key (kbd "C-S-s") 'dired-isearch-filenames-regexp) ;设置dire搜索快捷键
 
-(global-set-key (kbd "M-L") 'global-linum-mode) ;global-linum-mode 开关
+;; (global-set-key (kbd "M-L") 'global-linum-mode) ;global-linum-mode 开关
+(global-set-key (kbd "M-L") 'downcase-word) ;global-linum-mode 开关
 
 (global-set-key (kbd "C-(") 'winner-undo) ;窗口的后退
 (global-set-key (kbd "C-)") 'winner-redo) ;窗口的前进

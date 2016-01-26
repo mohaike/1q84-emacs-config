@@ -6,7 +6,9 @@
   (dolist (buffer (buffer-list))
     (when (eq (buffer-local-value 'major-mode buffer) 'ag-mode)
       (delete-windows-on buffer)
-      (kill-buffer buffer))))
+      (kill-buffer buffer))
+    (message "Kill All Ag Buffers!")
+    ))
 
 (defun taotao-ag-kill-other-buffers ()
   "Kill all `ag-mode' buffers other than the current buffer."
