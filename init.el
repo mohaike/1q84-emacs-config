@@ -19,7 +19,7 @@
 
 (require 'taotao-hl-line-and-select-color)
 
-(require 'taotao-dired-mode)
+;; (require 'taotao-dired-mode)
 
 (require 'taotao-emacs-mac-port)        ;Mac平台的emacs-mac-port的额外的设定
 

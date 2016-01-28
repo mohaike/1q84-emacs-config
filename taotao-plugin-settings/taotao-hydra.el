@@ -99,6 +99,8 @@
   ("1" taotao-window)
   ("2" taotao-stick-man-window)
   ;; ("3" taotao-gs-window)
+  ("3" taotao-ctr2-window)
+
   ("`" mark-sexp)
   ("v" set-mark-command)
   ("e" xah-open-in-external-app)
@@ -135,7 +137,7 @@
 
   ("ts" taotao-screenshot)
 
-  ("3" loop-alpha)                     ;设置屏幕透明，装逼利器
+  ("tb" loop-alpha)                     ;设置屏幕透明，装逼利器
 
   ("q" nil "quit")))
 

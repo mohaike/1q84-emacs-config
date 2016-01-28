@@ -1018,6 +1018,13 @@ See also `toggle-frame-fullscreen'."
   (dired "~/Documents/Project/SM/StickMan/Classes/")
   )
 
+(defun taotao-ctr2-window ()
+  (interactive)
+  (dired "~/Documents/Project/CTR/CTR2_ANDROID")
+  (taotao-window)
+  (dired "~/Documents/Project/CTR/CTR2_ANDROID/android/generated/full_free2play_yodo1/project/jni/classes/")
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; copy file path
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
