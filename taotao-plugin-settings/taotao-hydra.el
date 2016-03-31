@@ -145,15 +145,15 @@
  (kbd "<f1>")
  (defhydra hydra-1q84 ()
   "1●84"
-  ("1" lua-mode)
+  ("1" taotao-window)
   ("u" revert-buffer)
   ("h" global-hl-line-mode)
   ("j" javascript-mode)
 
-  ("ts" taotao-stick-man-profile)
-  ("tcs" taotao-stick-man-clear-profile)
+  ;; ("ts" taotao-stick-man-profile)
+  ;; ("tcs" taotao-stick-man-clear-profile)
 
-  ("oldtm" taotao-msm-profile)             ;怪兽
+  ;; ("oldtm" taotao-msm-profile)             ;怪兽
 
   ("a" ag-files)                        ;非win平台，这个是需要安装ag，还要继续安装emacs对应的ag.el
   ("xa" taotao-ag-kill-buffers)         ;同上
@@ -170,6 +170,8 @@
   ("-" winner-undo)
   ("dw" delete-window)
 
+  ("/" undo)
+
   (")" copy-word-forward)
   ("(" copy-word-backward)
   ("cc" taotao-copy-current-word)
@@ -184,8 +186,8 @@
   ("tf" taotao-formula)
   ("tm" taotao-zh-parentheses)
 
-  ("gp" xah-copy-file-path)             ;get path
-  ("gn" taotao-copy-buffer-name-to-clipboard) ;get name
+  ("fp" xah-copy-file-path)             ;get path
+  ("fn" taotao-copy-buffer-name-to-clipboard) ;get name
   ("co" clone-and-open-file)
 
   ;; ("0" taotao-uppercase-current-letter) ;0是测试键
