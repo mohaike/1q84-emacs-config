@@ -6,5 +6,6 @@ ido.last
 tramp
 url/
 .DS_Store
+.hl-save
 SessionDesktop.el
 eww-bookmarks
