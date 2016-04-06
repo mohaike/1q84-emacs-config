@@ -1,4 +1,4 @@
-(global-set-key [(f12)] 'loop-alpha)
+;; (global-set-key [(f12)] 'loop-alpha)
   
 (setq alpha-list '((85 50) (100 100)))  
   

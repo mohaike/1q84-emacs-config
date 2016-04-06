@@ -1198,8 +1198,10 @@ This command assumes point is not in a string or comment."
   (interactive)
   (capitalize-region (point) (1+ (point))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 额, sudo file
-(defun sudo-edit (&optional arg)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun taotao-sudo-edit (&optional arg)
   "Edit currently visited file as root.
 
 With a prefix ARG prompt for a file to visit.
@@ -1211,6 +1213,18 @@ buffer is not visiting a file."
                          (ido-read-file-name "Find file(as root): ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 取消选中
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun taotao-selection-quit ()
+  "取消选中"
+  (interactive)
+  ;; Avoid adding the region to the window selection.
+  (setq saved-region-selection nil)
+  (let (select-active-regions)
+    (deactivate-mark)))
+
+(global-set-key (kbd "<f12>") 'taotao-selection-quit)
 
 
 (provide 'inside-init)

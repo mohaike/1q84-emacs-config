@@ -5,9 +5,12 @@
 ;;
 ;; 还需要在highlight-symbol-autoloads.el里面修改，因为上面的似乎不大管用
 ;; (defalias 'highlight-symbol-at-point 'highlight-symbol) ==> (defalias 'taotao-highlight-symbol-at-point 'highlight-symbol)
+;;
+;; 这些快捷键拿给【hl-anything】那边使用了
+;; (global-set-key (kbd "M-]") 'highlight-symbol-next)
+;; (global-set-key (kbd "M-[") 'highlight-symbol-prev)
+
 (global-set-key (kbd "M-|") 'taotao-highlight-symbol-at-point)
-(global-set-key (kbd "M-]") 'highlight-symbol-next)
-(global-set-key (kbd "M-[") 'highlight-symbol-prev)
 (global-set-key (kbd "M-N") 'highlight-symbol-next)
 (global-set-key (kbd "M-P") 'highlight-symbol-prev)
 (global-set-key (kbd "M-r") 'highlight-symbol-query-replace)
