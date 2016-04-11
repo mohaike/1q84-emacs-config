@@ -43,8 +43,6 @@
 
 (require 'taotao-lua)
 
-(require 'taotao-hydra)
-
 (require 'taotao-gtags-ggtags)
 
 (require 'taotao-git-emacs)
@@ -76,6 +74,8 @@
 (require 'taotao-cmake-mode)
 
 (require 'taotao-hl-anything)
+
+(require 'taotao-hydra)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 测试的时候用的
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1,162 +1,112 @@
 (require 'hydra)
 
 (defhydra hydra-buffer-menu (:color pink
-                             :hint nil)
+                                    :hint nil)
   "
-^Highlight^             ^Unhighlight^           ^Find^
-^^^^^^^^-----------------------------------------------------------------
-_g_: global             _ug_: uhl-global        _n_: find-next-thing
-_l_: local              _ul_: uhl-local         _p_: find-prev-thing
+^|^-------------------------------------+-----------------------------------+---------------------------------+----------------------------+------------------------------^|^
+^|^ ^text^                                ^|^ ^highlight^                         ^|^ ^view^                            ^|^ ^search^                     ^|^ ^file^                         ^|^
+^|^-------------------------------------+-----------------------------------+---------------------------------+----------------------------+------------------------------^|^
+^|^ _cc_: taotao-copy-current-word        ^|^ _hm_: hl-highlight-mode             ^|^ _0_: winner-redo                  ^|^ _a_: ag-files                ^|^ _fp_: xah-copy-file-path       ^|^
+^|^ _cl_: taotao-copy-end-of-line         ^|^ _hg_: hl-highlight-thingatpt-global ^|^ _9_: winner-undo                  ^|^ _ka_: ag-kill-buffers        ^|^ _fn_: copy-buffer-name         ^|^
+^|^ _tf_: taotao-formula                  ^|^ _hl_: hl-highlight-thingatpt-local  ^|^ _1_: taotao-window                ^|^ _koa_: ag-kill-other-buffers ^|^ _fco_: clone-and-open-file     ^|^
+^|^ _tm_: taotao-zh-parentheses           ^|^ _ug_: hl-unhighlight-all-global     ^|^ _2_: taotao-stick-man-window      ^|^ _kg_: ggtags-kill-buffers    ^|^ _fe_: xah-open-in-external-app ^|^
+^|^ _tu_: taotao-uppercase-current-letter ^|^ _ul_: hl-unhighlight-all-local      ^|^ _3_: taotao-ctr2-window           ^|^                            ^|^ _fo_: reveal-in-finder         ^|^
+^|^ _/_: undo                             ^|^ _n_: hl-find-next-thing             ^|^ _<_: previous-multiframe-window   ^|^                            ^|^ _ff_: find-name-dired          ^|^
+^|^ _cf_: copy-word-forward               ^|^ _p_: hl-find-prev-thing             ^|^ _>_: next-multiframe-window       ^|^                            ^|^                              ^|^
+^|^ _cb_: copy-word-backward              ^|^ _hp_: hl-paren-mode                 ^|^ _]_: scroll-up-line               ^|^                            ^|^                              ^|^
+^|^ _ms_: mark-sexp                       ^|^ _,_: highlight-symbol-prev          ^|^ _[_: scroll-down-line             ^|^                            ^|^                              ^|^
+^|^ _v_: set-mark-command                 ^|^ _._: highlight-symbol-next          ^|^ _wm_: whitespace-mode             ^|^                            ^|^                              ^|^
+^|^ _}_: move-region-down                 ^|^ _tl_: hl-line-mode                  ^|^ _dtw_: delete-trailing-whitespace ^|^                            ^|^                              ^|^
+^|^ _{_: move-region-up                   ^|^                                   ^|^ _br_: revert-buffer               ^|^                            ^|^                              ^|^
+^|^ _z_: taotao-mark-line                 ^|^                                   ^|^ _kb_: kill-this-buffer            ^|^                            ^|^                              ^|^
+^|^ _-_: shift-left-tab                   ^|^                                   ^|^ _j_: javascript-mode              ^|^                            ^|^                              ^|^
+^|^ _=_: shift-right-tab                  ^|^                                   ^|^ _ts_: taotao-screenshot           ^|^                            ^|^                              ^|^
+^|^ ___: shift-left                       ^|^                                   ^|^                                 ^|^                            ^|^                              ^|^
+^|^ _+_: shift-right                      ^|^                                   ^|^                                 ^|^                            ^|^                              ^|^
 "
-  ("g" hl-highlight-thingatpt-global)
-  ("l" hl-highlight-thingatpt-local)
+
+  ("cc" taotao-copy-current-word)
+  ("cl" taotao-copy-end-of-line)
+  ("tf" taotao-formula)
+  ("tm" taotao-zh-parentheses)
+  ("tu" taotao-uppercase-current-letter)
+  ("/" undo)
+  ("cf" copy-word-forward)
+  ("cb" copy-word-backward)
+  ("ms" mark-sexp)
+  ("v" set-mark-command)
+  ("}" move-region-down)
+  ("{" move-region-up)
+  ("z" taotao-mark-line)
+  ("-" shift-left-tab)
+  ("=" shift-right-tab)
+  ("_" shift-left)
+  ("+" shift-right)
+
+  ("hm" hl-highlight-mode)
+  ("hg" hl-highlight-thingatpt-global)
+  ("hl" hl-highlight-thingatpt-local)
   ("ug" hl-unhighlight-all-global)
   ("ul" hl-unhighlight-all-local)
   ("n" hl-find-next-thing)
   ("p" hl-find-prev-thing)
-  ("hp" hl-paren-mode "hl-paren-mode")
+  ("hp" hl-paren-mode)
+  ("," highlight-symbol-prev)
+  ("." highlight-symbol-next)
+  ("tl" hl-line-mode)
+
+  ("0" winner-redo)
+  ("9" winner-undo)
+  ("1" taotao-window)
+  ("2" taotao-stick-man-window)
+  ("3" taotao-ctr2-window)
+  ("<" previous-multiframe-window)
+  (">" next-multiframe-window)
+  ("]" scroll-up-line)
+  ("[" scroll-down-line)
+  ("wm" whitespace-mode)
+  ("dtw" delete-trailing-whitespace)
+  ("br" revert-buffer)
+  ("kb" kill-this-buffer)
+  ("j" javascript-mode)
+  ("ts" taotao-screenshot)
+
+  ("a" ag-files)
+  ("ka" taotao-ag-kill-buffers)
+  ("koa" taotao-ag-kill-other-buffers)
+  ("kg" ggtags-kill-buffers)
+
+  ("fp" xah-copy-file-path)
+  ("fn" taotao-copy-buffer-name-to-clipboard)
+  ("fco" clone-and-open-file)
+  ("fe" xah-open-in-external-app)
+  ("fo" reveal-in-finder)
+  ("ff" find-name-dired)
+
   ("q" nil "quit" :color blue))
-(global-set-key (kbd "M-\\") 'hydra-buffer-menu/body)
+
+(global-set-key (kbd "<f1>") 'hydra-buffer-menu/body)
 
 (global-set-key
  (kbd "C-M-o")
  (defhydra hydra-window  (:color red)
    "1q84-org"
 
-  ("l" forward-char)
-  ("h" backward-char)
-  ("j" next-line)
-  ("k" previous-line)
+   ("l" forward-char)
+   ("h" backward-char)
+   ("j" next-line)
+   ("k" previous-line)
 
-  ("s" show-all)
+   ("s" show-all)
 
-  ("n" outline-next-visible-heading)
-  ("p" outline-previous-visible-heading)
-  ("f" org-forward-heading-same-level)
-  ("b" org-backward-heading-same-level)
-  ("td" org-todo)
+   ("n" outline-next-visible-heading)
+   ("p" outline-previous-visible-heading)
+   ("f" org-forward-heading-same-level)
+   ("b" org-backward-heading-same-level)
+   ("td" org-todo)
 
 
    ("q" nil)
    ("m" headlong-bookmark-jump)))
-
-
-(global-set-key
- (kbd "<f2>")
- (defhydra hydra-vi (:color red)
-
-  "vi"
-  ("l" forward-char)
-  ("h" backward-char)
-  ("j" next-line)
-  ("k" previous-line)
-
-  ("/" undo)
-
-  ("," previous-multiframe-window)
-  ("." next-multiframe-window)
-  ("0" winner-redo)
-  ("9" winner-undo)
-
-  ("x" kill-this-buffer)
-  ("u" revert-buffer)
-
-  ("1" taotao-window)
-  ("2" taotao-stick-man-window)
-  ;; ("3" taotao-gs-window)
-  ("3" taotao-ctr2-window)
-
-  ("`" mark-sexp)
-  ("v" set-mark-command)
-  ("e" xah-open-in-external-app)
-  ("o" reveal-in-finder)
-  ("cfp" xah-copy-file-path)
-  ("cbn" taotao-copy-buffer-name-to-clipboard)
-  ("co" clone-and-open-file)
-  ("ff" find-name-dired)                ;find file in dired
-
-  ("-" shift-left-tab)
-  ("=" shift-right-tab)
-
-  ("_" shift-left)
-  ("+" shift-right)
-
-  ("}" move-region-down)
-  ("{" move-region-up)
-
-  ("]" scroll-up-line)
-  ("[" scroll-down-line)
-
-  ("z" taotao-mark-line)
-
-  ;; ("tg" keyboard-quit)
-
-  ("tl" hl-line-mode)
-
-  ;; ("ms" magit-status)
-
-  ("dtw" delete-trailing-whitespace)
-  ("dw" delete-window)
-
-  ("wm" whitespace-mode)
-
-  ("ts" taotao-screenshot)
-
-  ("tb" loop-alpha)                     ;设置屏幕透明，装逼利器
-
-  ("q" nil "quit")))
-
-(global-set-key
- (kbd "<f1>")
- (defhydra hydra-1q84 ()
-  "1●84"
-  ("1" taotao-window)
-  ("u" revert-buffer)
-  ("h" global-hl-line-mode)
-  ("j" javascript-mode)
-
-  ;; ("ts" taotao-stick-man-profile)
-  ;; ("tcs" taotao-stick-man-clear-profile)
-
-  ;; ("oldtm" taotao-msm-profile)             ;怪兽
-
-  ("a" ag-files)                        ;非win平台，这个是需要安装ag，还要继续安装emacs对应的ag.el
-  ("xa" taotao-ag-kill-buffers)         ;同上
-  ("xoa" taotao-ag-kill-other-buffers)  ;同上
-
-  ("tg" taotao-gtags-update)            ;运行脚本~/.emacs.d/taotao-origin-init/taotao-update-gtags/taotao-gtags-command
-  ("xg" ggtags-kill-buffers)            ;干掉关掉很麻烦的ggtags-navigation-mode
-
-  ("mf" toggle-frame-maximized)         ;最大化窗口
-
-  ("," previous-multiframe-window)
-  ("." next-multiframe-window)
-  ("=" winner-redo)
-  ("-" winner-undo)
-  ("dw" delete-window)
-
-  ("/" undo)
-
-  (")" copy-word-forward)
-  ("(" copy-word-backward)
-  ("cc" taotao-copy-current-word)
-  ("cl" taotao-copy-end-of-line)
-
-  ("sc" stickman-ui-change)
-  ("sr" stickman-reflash-flafile)
-  ("skt" stickman-clear-ui-tmp)         ;清除火柴人Flash文件下ui下的tmp文件夹，以及命名为tmp的文件
-
-  ("tu" taotao-uppercase-current-letter)
-
-  ("tf" taotao-formula)
-  ("tm" taotao-zh-parentheses)
-
-  ("fp" xah-copy-file-path)             ;get path
-  ("fn" taotao-copy-buffer-name-to-clipboard) ;get name
-  ("co" clone-and-open-file)
-
-  ;; ("0" taotao-uppercase-current-letter) ;0是测试键
-
-  ("q" nil "quit")))
 
 (provide 'taotao-hydra)
