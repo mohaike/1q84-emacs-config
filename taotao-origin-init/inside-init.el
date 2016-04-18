@@ -1025,6 +1025,12 @@ See also `toggle-frame-fullscreen'."
   (dired "~/Documents/Project/CTR/CTR2_ANDROID/android/generated/full_free2play_yodo1/project/jni/classes/")
   )
 
+(defun taotao-nax-runner-window ()
+  (interactive)
+  (dired "~/Documents/Project/LD/NaxRunner")
+  (taotao-window)
+  (dired "~/Documents/Project/LD/NaxRunner/Assets/Scripts")
+  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; copy file path
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

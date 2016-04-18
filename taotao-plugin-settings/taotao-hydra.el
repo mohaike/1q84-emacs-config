@@ -11,17 +11,17 @@
 ^|^ _tf_: taotao-formula                  ^|^ _hl_: hl-highlight-thingatpt-local  ^|^ _1_: taotao-window                ^|^ _koa_: ag-kill-other-buffers ^|^ _fco_: clone-and-open-file     ^|^
 ^|^ _tm_: taotao-zh-parentheses           ^|^ _ug_: hl-unhighlight-all-global     ^|^ _2_: taotao-stick-man-window      ^|^ _kg_: ggtags-kill-buffers    ^|^ _fe_: xah-open-in-external-app ^|^
 ^|^ _tu_: taotao-uppercase-current-letter ^|^ _ul_: hl-unhighlight-all-local      ^|^ _3_: taotao-ctr2-window           ^|^                            ^|^ _fo_: reveal-in-finder         ^|^
-^|^ _/_: undo                             ^|^ _n_: hl-find-next-thing             ^|^ _<_: previous-multiframe-window   ^|^                            ^|^ _ff_: find-name-dired          ^|^
-^|^ _cf_: copy-word-forward               ^|^ _p_: hl-find-prev-thing             ^|^ _>_: next-multiframe-window       ^|^                            ^|^                              ^|^
-^|^ _cb_: copy-word-backward              ^|^ _hp_: hl-paren-mode                 ^|^ _]_: scroll-up-line               ^|^                            ^|^                              ^|^
-^|^ _ms_: mark-sexp                       ^|^ _,_: highlight-symbol-prev          ^|^ _[_: scroll-down-line             ^|^                            ^|^                              ^|^
-^|^ _v_: set-mark-command                 ^|^ _._: highlight-symbol-next          ^|^ _wm_: whitespace-mode             ^|^                            ^|^                              ^|^
-^|^ _}_: move-region-down                 ^|^ _tl_: hl-line-mode                  ^|^ _dtw_: delete-trailing-whitespace ^|^                            ^|^                              ^|^
-^|^ _{_: move-region-up                   ^|^                                   ^|^ _br_: revert-buffer               ^|^                            ^|^                              ^|^
-^|^ _z_: taotao-mark-line                 ^|^                                   ^|^ _kb_: kill-this-buffer            ^|^                            ^|^                              ^|^
-^|^ _-_: shift-left-tab                   ^|^                                   ^|^ _j_: javascript-mode              ^|^                            ^|^                              ^|^
-^|^ _=_: shift-right-tab                  ^|^                                   ^|^ _ts_: taotao-screenshot           ^|^                            ^|^                              ^|^
-^|^ ___: shift-left                       ^|^                                   ^|^                                 ^|^                            ^|^                              ^|^
+^|^ _/_: undo                             ^|^ _n_: hl-find-next-thing             ^|^ _4_: taotao-nax-runner-window     ^|^                            ^|^ _ff_: find-name-dired          ^|^
+^|^ _cf_: copy-word-forward               ^|^ _p_: hl-find-prev-thing             ^|^ _<_: previous-multiframe-window   ^|^                            ^|^                              ^|^
+^|^ _cb_: copy-word-backward              ^|^ _hp_: hl-paren-mode                 ^|^ _>_: next-multiframe-window       ^|^                            ^|^                              ^|^
+^|^ _ms_: mark-sexp                       ^|^ _,_: highlight-symbol-prev          ^|^ _]_: scroll-up-line               ^|^                            ^|^                              ^|^
+^|^ _v_: set-mark-command                 ^|^ _._: highlight-symbol-next          ^|^ _[_: scroll-down-line             ^|^                            ^|^                              ^|^
+^|^ _}_: move-region-down                 ^|^ _tl_: hl-line-mode                  ^|^ _wm_: whitespace-mode             ^|^                            ^|^                              ^|^
+^|^ _{_: move-region-up                   ^|^                                   ^|^ _dtw_: delete-trailing-whitespace ^|^                            ^|^                              ^|^
+^|^ _z_: taotao-mark-line                 ^|^                                   ^|^ _br_: revert-buffer               ^|^                            ^|^                              ^|^
+^|^ _-_: shift-left-tab                   ^|^                                   ^|^ _kb_: kill-this-buffer            ^|^                            ^|^                              ^|^
+^|^ _=_: shift-right-tab                  ^|^                                   ^|^ _j_: javascript-mode              ^|^                            ^|^                              ^|^
+^|^ ___: shift-left                       ^|^                                   ^|^ _ts_: taotao-screenshot           ^|^                            ^|^                              ^|^
 ^|^ _+_: shift-right                      ^|^                                   ^|^                                 ^|^                            ^|^                              ^|^
 "
 
@@ -60,6 +60,7 @@
   ("1" taotao-window)
   ("2" taotao-stick-man-window)
   ("3" taotao-ctr2-window)
+  ("4" taotao-nax-runner-window)
   ("<" previous-multiframe-window)
   (">" next-multiframe-window)
   ("]" scroll-up-line)
