@@ -9,8 +9,8 @@
 ^|^ _cc_: taotao-copy-current-word        ^|^ _hm_: hl-highlight-mode             ^|^ _0_: winner-redo                  ^|^ _a_: ag-files                ^|^ _fp_: xah-copy-file-path       ^|^
 ^|^ _cl_: taotao-copy-end-of-line         ^|^ _hg_: hl-highlight-thingatpt-global ^|^ _9_: winner-undo                  ^|^ _ka_: ag-kill-buffers        ^|^ _fn_: copy-buffer-name         ^|^
 ^|^ _tf_: taotao-formula                  ^|^ _hl_: hl-highlight-thingatpt-local  ^|^ _1_: taotao-window                ^|^ _koa_: ag-kill-other-buffers ^|^ _fco_: clone-and-open-file     ^|^
-^|^ _tm_: taotao-zh-parentheses           ^|^ _ug_: hl-unhighlight-all-global     ^|^ _2_: taotao-stick-man-window      ^|^ _kg_: ggtags-kill-buffers    ^|^ _fe_: xah-open-in-external-app ^|^
-^|^ _tu_: taotao-uppercase-current-letter ^|^ _ul_: hl-unhighlight-all-local      ^|^ _3_: taotao-ctr2-window           ^|^                            ^|^ _fo_: reveal-in-finder         ^|^
+^|^ _tm_: taotao-zh-parentheses           ^|^ _ug_: hl-unhighlight-all-global     ^|^ _2_: taotao-islashero-window      ^|^ _kg_: ggtags-kill-buffers    ^|^ _fe_: xah-open-in-external-app ^|^
+^|^ _tu_: taotao-uppercase-current-letter ^|^ _ul_: hl-unhighlight-all-local      ^|^ _3_: taotao-stick-man-window      ^|^                            ^|^ _fo_: reveal-in-finder         ^|^
 ^|^ _/_: undo                             ^|^ _n_: hl-find-next-thing             ^|^ _4_: taotao-nax-runner-window     ^|^                            ^|^ _ff_: find-name-dired          ^|^
 ^|^ _cf_: copy-word-forward               ^|^ _p_: hl-find-prev-thing             ^|^ _<_: previous-multiframe-window   ^|^                            ^|^                              ^|^
 ^|^ _cb_: copy-word-backward              ^|^ _hp_: hl-paren-mode                 ^|^ _>_: next-multiframe-window       ^|^                            ^|^                              ^|^
@@ -58,8 +58,8 @@
   ("0" winner-redo)
   ("9" winner-undo)
   ("1" taotao-window)
-  ("2" taotao-stick-man-window)
-  ("3" taotao-ctr2-window)
+  ("2" taotao-islashero-window)
+  ("3" taotao-stick-man-window)
   ("4" taotao-nax-runner-window)
   ("<" previous-multiframe-window)
   (">" next-multiframe-window)

@@ -852,7 +852,7 @@ This is particularly useful under Mac OSX, where GUI apps are not started from a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 统计词语出现的次数
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun word-count-analysis (start end)
+(defun taotao-word-count-analysis (start end)
       "Count how many times each word is used in the region.
     Punctuation is ignored."
       (interactive "r")
@@ -1018,11 +1018,19 @@ See also `toggle-frame-fullscreen'."
   (dired "~/Documents/Project/SM/StickMan/Classes/")
   )
 
+
 (defun taotao-ctr2-window ()
   (interactive)
   (dired "~/Documents/Project/CTR/CTR2_ANDROID")
   (taotao-window)
   (dired "~/Documents/Project/CTR/CTR2_ANDROID/android/generated/full_free2play_yodo1/project/jni/classes/")
+  )
+
+(defun taotao-islashero-window ()
+  (interactive)
+  (dired "~/Documents/Project/iSlashHeroes/iSlashHeroes_CN")
+  (taotao-window)
+  (dired "~/Documents/Project/iSlashHeroes/iSlashHeroes_CN/Assets/")
   )
 
 (defun taotao-nax-runner-window ()
@@ -1231,6 +1239,10 @@ buffer is not visiting a file."
     (deactivate-mark)))
 
 (global-set-key (kbd "<f12>") 'taotao-selection-quit)
+
+
+;; 刷新当前的 Buffer
+(global-set-key (kbd "<f7>") 'revert-buffer)
 
 
 (provide 'inside-init)
