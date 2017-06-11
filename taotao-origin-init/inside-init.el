@@ -110,7 +110,7 @@ Otherwise, get the symbol at point, as a string."
     (kill-new ξsstr)
     (message "Current word copied: 「%s」" ξsstr)))
 
-(global-set-key (kbd "M-s-x") 'taotao-copy-end-of-line)
+(global-set-key (kbd "s-x") 'taotao-copy-end-of-line)
 
 
 
@@ -393,7 +393,7 @@ occurence of CHAR."
 
 (setq gnus-inhibit-startup-message t)   ;关闭gnus启动时的画面
 
-(setq initial-frame-alist '((width . 160) (height . 70))) ;设置启动时窗口的长宽，下面为160*70
+;; (setq initial-frame-alist '((width . 160) (height . 70))) ;设置启动时窗口的长宽，下面为160*70
 
 ;; (setq visible-bell t)                   ;关闭出错时的提示声
  (setq ring-bell-function 'ignore)      ;彻底不要提示，OSX 10.11有恶心的Bug
@@ -795,6 +795,7 @@ URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'"
     ;; (shell-command "xdg-open .") ;; 2013-02-10 this sometimes froze emacs till the folder is closed. ⁖ with nautilus
     ) ))
 
+(global-set-key (kbd "C-S-o") 'xah-open-in-desktop)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Mac平台终端识别命令
@@ -1039,6 +1040,21 @@ See also `toggle-frame-fullscreen'."
   (taotao-window)
   (dired "~/Documents/Project/LD/NaxRunner/Assets/Scripts")
   )
+
+
+(defun taotao-trex-model-window ()
+  (interactive)
+  (dired "~/.jenkins/jobs/Tew/workspace/trex-model/")
+  (taotao-window)
+  (dired "~/.jenkins/jobs/Tew/workspace/trex-model/")
+  )
+
+(defun taotao-trex-client-window ()
+  (interactive)
+  (dired "~/.jenkins/jobs/Tew/workspace/trex-client")
+  (taotao-window)
+  (dired "~/.jenkins/jobs/Tew/workspace/trex-client/TrexClient/")
+  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; copy file path
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1243,6 +1259,13 @@ buffer is not visiting a file."
 
 ;; 刷新当前的 Buffer
 (global-set-key (kbd "<f7>") 'revert-buffer)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 格式化C代码用的
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/taotao-origin-init/taotao-astyle/")
+(require 'astyle-utils)
 
 
 (provide 'inside-init)

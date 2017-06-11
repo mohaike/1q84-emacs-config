@@ -16,5 +16,8 @@
 (progn
   (require 'dired)
   (define-key dired-mode-map (kbd "z") 'taotao-copy-dired-file-path))
+(progn
+  (require 'dired)
+  (define-key dired-mode-map (kbd "-") 'global-hl-line-mode))
 
 (provide 'taotao-dired-mode)

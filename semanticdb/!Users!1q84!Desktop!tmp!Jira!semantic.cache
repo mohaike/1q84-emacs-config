@@ -1,0 +1,16 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode html-mode
+      :tags nil
+      :file "momo_tmp.html"
+      :pointmax 157
+      :fsize 156
+      :lastmodtime '(22768 39094 0 0)
+      :unmatched-syntax nil))
+  :file "!Users!1q84!Desktop!tmp!Jira!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

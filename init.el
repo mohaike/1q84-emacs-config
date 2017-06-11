@@ -79,6 +79,16 @@
 
 (require 'taotao-json-format-mode)
 
+(require 'taotao-shader-mode)
+
+(require 'taotao-auto-add)              ;专门添加那些自动添加的代码
+
+(require 'taotao-jq-mode)               ;格式化 json 用的
+
+(require 'taotao-switch-window)         ;切换 window 用的
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 测试的时候用的
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
